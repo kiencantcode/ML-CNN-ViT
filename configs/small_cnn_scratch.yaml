@@ -5,6 +5,8 @@ data:
 model:
   name: small_cnn
   pretrained: false
+  width: 64
+  dropout: 0.1
 train:
   epochs: 60
   lr_head: 1.0e-3
