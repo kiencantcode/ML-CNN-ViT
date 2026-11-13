@@ -19,6 +19,8 @@ def parse_args():
                         help="override config values, e.g. seed=1 data.train_fraction=0.1")
     parser.add_argument("--skip-existing", action="store_true",
                         help="do nothing if this run already has metrics.json")
+    parser.add_argument("--resume", action="store_true",
+                        help="continue an interrupted run from its last.pt (needs train.save_last)")
     parser.add_argument("--overfit-batch", type=int, default=0, metavar="STEPS",
                         help="sanity check: train on one batch for STEPS steps and exit")
     return parser.parse_args()
@@ -70,7 +72,7 @@ def main():
           f"aug {cfg['data']['augmentation']} | seed {cfg['seed']} | "
           f"train {len(train_loader.dataset)} / val {len(val_loader.dataset)} / "
           f"test {len(test_loader.dataset)} | device {device}")
-    fit(model, (train_loader, val_loader, test_loader), cfg, run_dir, device)
+    fit(model, (train_loader, val_loader, test_loader), cfg, run_dir, device, resume=args.resume)
 
 
 if __name__ == "__main__":

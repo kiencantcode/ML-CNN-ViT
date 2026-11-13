@@ -1,7 +1,9 @@
 import csv
 import json
 import math
+import random
 import time
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -50,6 +52,7 @@ def train_one_epoch(model, loader, criterion, optimizer, scheduler, scaler, devi
     train_cfg = cfg["train"]
     accum = train_cfg.get("grad_accum_steps", 1)
     amp = train_cfg.get("amp", True)
+    grad_clip = train_cfg.get("grad_clip")  # optional, e.g. 1.0 for ViT; off when unset
     set_train_mode(model, cfg["model"].get("freeze_backbone", False))
 
     total_loss, correct, seen = 0.0, 0, 0
@@ -68,6 +71,9 @@ def train_one_epoch(model, loader, criterion, optimizer, scheduler, scaler, devi
         scaler.scale(loss / accum).backward()
         is_last = step + 1 == len(loader)
         if (step + 1) % accum == 0 or is_last:
+            if grad_clip:
+                scaler.unscale_(optimizer)  # clip the real gradients, not the scaled ones
+                nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
             scaler.step(optimizer)
             scaler.update()
             optimizer.zero_grad(set_to_none=True)
@@ -121,7 +127,44 @@ def build_optimizer(model, cfg):
     return torch.optim.AdamW(groups)
 
 
-def fit(model, loaders, cfg, run_dir, device):
+def _rng_state():
+    """Random states of every generator training uses, so a resumed run shuffles the same way."""
+    state = {"python": random.getstate(), "numpy": np.random.get_state(),
+             "torch": torch.get_rng_state()}
+    if torch.cuda.is_available():
+        state["cuda"] = torch.cuda.get_rng_state_all()
+    return state
+
+
+def _set_rng_state(state):
+    random.setstate(state["python"])
+    np.random.set_state(state["numpy"])
+    torch.set_rng_state(state["torch"].cpu())
+    if "cuda" in state and torch.cuda.is_available():
+        torch.cuda.set_rng_state_all([s.cpu() for s in state["cuda"]])
+
+
+def _truncate_history(path, last_epoch):
+    """Drop history rows after `last_epoch` (an epoch logged but not checkpointed)."""
+    with open(path, newline="") as f:
+        rows = list(csv.reader(f))
+    header, body = rows[0], [r for r in rows[1:] if int(r[0]) <= last_epoch]
+    with open(path, "w", newline="") as f:
+        csv.writer(f).writerows([header] + body)
+
+
+def fit(model, loaders, cfg, run_dir, device, resume=False):
+    """Train, keep the best epoch by val accuracy, test it once, write metrics.json.
+
+    Optional features, all off unless the config turns them on, so runs that do not
+    set them behave exactly as before:
+      train.save_last: true            write last.pt after every epoch (weights,
+                                       optimizer, scheduler, scaler, counters, RNG)
+      train.early_stopping_patience: N stop after N epochs without val-acc improvement
+      train.grad_clip: x               clip the gradient norm to x
+    resume=True continues from run_dir/last.pt (needs save_last). Use the same config
+    as the interrupted run; changing epochs shifts the LR schedule.
+    """
     train_loader, val_loader, test_loader = loaders
     train_cfg = cfg["train"]
     amp = train_cfg.get("amp", True)
@@ -136,16 +179,44 @@ def fit(model, loaders, cfg, run_dir, device):
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
 
+    run_dir = Path(run_dir)
     history_path = run_dir / "history.csv"
     checkpoint_path = run_dir / "best.pt"
+    last_path = run_dir / "last.pt"
+    save_last = bool(train_cfg.get("save_last", False))
+    patience = int(train_cfg.get("early_stopping_patience") or 0)  # 0 = off
     fields = ["epoch", "lr", "train_loss", "train_acc", "val_loss", "val_acc", "val_f1", "epoch_time_s"]
     best_val_acc, best_epoch, epoch_times = -1.0, -1, []
+    epochs_without_improvement, epochs_run, early_stopped = 0, 0, False
+    elapsed_before, start_epoch = 0.0, 1
 
-    with open(history_path, "w", newline="") as f:
-        csv.writer(f).writerow(fields)
+    if resume:
+        if not last_path.exists():
+            raise FileNotFoundError(f"cannot resume: {last_path} does not exist "
+                                    "(was train.save_last on?)")
+        ckpt = torch.load(last_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model"])
+        optimizer.load_state_dict(ckpt["optimizer"])
+        scheduler.load_state_dict(ckpt["scheduler"])
+        scaler.load_state_dict(ckpt["scaler"])
+        best_val_acc, best_epoch = ckpt["best_val_acc"], ckpt["best_epoch"]
+        epoch_times, elapsed_before = ckpt["epoch_times"], ckpt["elapsed"]
+        epochs_without_improvement = ckpt["epochs_without_improvement"]
+        early_stopped = ckpt["early_stopped"]
+        epochs_run = ckpt["epoch"]
+        start_epoch = ckpt["epoch"] + 1
+        _set_rng_state(ckpt["rng"])
+        _truncate_history(history_path, ckpt["epoch"])
+        print(f"resumed from {last_path} at epoch {ckpt['epoch']} "
+              f"(best epoch {best_epoch}, val acc {best_val_acc:.4f})", flush=True)
+    else:
+        with open(history_path, "w", newline="") as f:
+            csv.writer(f).writerow(fields)
 
     total_start = time.perf_counter()
-    for epoch in range(1, train_cfg["epochs"] + 1):
+    for epoch in range(start_epoch, train_cfg["epochs"] + 1):
+        if early_stopped:  # the interrupted run had already stopped early
+            break
         start = time.perf_counter()
         train_stats = train_one_epoch(model, train_loader, criterion, optimizer, scheduler,
                                       scaler, device, cfg)
@@ -161,16 +232,45 @@ def fit(model, loaders, cfg, run_dir, device):
         with open(history_path, "a", newline="") as f:
             csv.writer(f).writerow(row)
 
+        epochs_run = epoch
         improved = val_stats["acc"] > best_val_acc
         if improved:
             best_val_acc, best_epoch = val_stats["acc"], epoch
+            epochs_without_improvement = 0
             torch.save(model.state_dict(), checkpoint_path)
+        else:
+            epochs_without_improvement += 1
+        if patience and epochs_without_improvement >= patience:
+            early_stopped = True
+
+        if save_last:
+            # Temp file first, so a crash mid-save cannot corrupt the previous last.pt.
+            tmp_path = last_path.with_suffix(".pt.tmp")
+            torch.save({
+                "epoch": epoch,
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "scaler": scaler.state_dict(),
+                "best_val_acc": best_val_acc,
+                "best_epoch": best_epoch,
+                "epochs_without_improvement": epochs_without_improvement,
+                "early_stopped": early_stopped,
+                "epoch_times": epoch_times,
+                "elapsed": elapsed_before + time.perf_counter() - total_start,
+                "rng": _rng_state(),
+            }, tmp_path)
+            tmp_path.replace(last_path)
+
         print(f"epoch {epoch:>3}/{train_cfg['epochs']}  train loss {train_stats['loss']:.4f} "
               f"acc {train_stats['acc']:.4f}  val loss {val_stats['loss']:.4f} "
               f"acc {val_stats['acc']:.4f}  {epoch_time:.0f}s{'  *best' if improved else ''}",
               flush=True)
+        if early_stopped:
+            print(f"early stopping: no val acc improvement for {patience} epochs", flush=True)
+            break
 
-    train_time = time.perf_counter() - total_start
+    train_time = elapsed_before + time.perf_counter() - total_start
     peak_mem = torch.cuda.max_memory_allocated(device) / 1024**3 if device.type == "cuda" else 0.0
 
     release_workers(train_loader)
@@ -198,6 +298,9 @@ def fit(model, loaders, cfg, run_dir, device):
         "best_val_acc": best_val_acc,
         "best_epoch": best_epoch,
         "epochs": train_cfg["epochs"],
+        "epochs_run": epochs_run,
+        "early_stopped": early_stopped,
+        "early_stopping_patience": patience or None,
         "params_total": total_params,
         "params_trainable": trainable_params,
         "train_time_s": train_time,
@@ -213,6 +316,7 @@ def fit(model, loaders, cfg, run_dir, device):
 
     if not train_cfg.get("keep_checkpoint", True):
         checkpoint_path.unlink(missing_ok=True)
+        last_path.unlink(missing_ok=True)
 
     print(f"test acc {test_stats['acc']:.4f}  macro-F1 {test_stats['f1']:.4f}  "
           f"(best epoch {best_epoch}, {train_time / 60:.1f} min, peak GPU {peak_mem:.2f} GB)")
