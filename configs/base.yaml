@@ -6,9 +6,11 @@ data:
   root: data
   image_size: 224
   val_fraction: 0.1
+  split_seed: 0
   train_fraction: 1.0
   augmentation: basic
   num_workers: 4
+  eval_num_workers: 2
 
 model:
   name: null
