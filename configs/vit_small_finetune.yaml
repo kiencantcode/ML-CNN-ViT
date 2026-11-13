@@ -8,4 +8,3 @@ model:
 train:
   grad_clip: 1.0
   save_last: true              # last.pt every epoch, so a Colab disconnect can --resume
-  early_stopping_patience: 5   # ViT side only; CNN configs train all epochs

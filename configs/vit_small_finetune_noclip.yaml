@@ -1,0 +1,7 @@
+inherit: vit_small_finetune.yaml
+experiment: vit_small_finetune_noclip
+# Same as vit_small_finetune.yaml but WITHOUT gradient clipping, so the recipe
+# matches the CNN fine-tune runs (resnet50 / convnext_tiny), which have no clipping.
+# Use this run for the main CNN vs ViT comparison; the clipped run is an ablation.
+train:
+  grad_clip: null
