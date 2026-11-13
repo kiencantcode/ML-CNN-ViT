@@ -1,0 +1,11 @@
+inherit: base.yaml
+experiment: vit_small_finetune
+# DeiT-Small (ViT-S/16, ~22M params), pretrained on ImageNet-1k only,
+# like resnet50.a1_in1k and convnext_tiny.fb_in1k.
+model:
+  name: deit_small_patch16_224.fb_in1k
+  pretrained: true
+train:
+  grad_clip: 1.0
+  save_last: true              # last.pt every epoch, so a Colab disconnect can --resume
+  early_stopping_patience: 5   # ViT side only; CNN configs train all epochs
