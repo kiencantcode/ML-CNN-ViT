@@ -1,0 +1,2 @@
+experiment,model,pretrained,freeze_backbone,train_fraction,augmentation,seed,n_train,test_acc,test_f1,best_val_acc,best_epoch,epochs,params_m,trainable_m,train_time_min,images_per_s,peak_gpu_gb
+resnet50_finetune,resnet50.a1_in1k,True,False,1.0,basic,0,45000,97.22,97.21894391061306,97.18,7,8,23.528522,23.528522,37.68325961166667,170.1284605931639,1.6838698387145996
