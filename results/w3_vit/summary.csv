@@ -1,0 +1,14 @@
+experiment,model,pretrained,freeze_backbone,train_fraction,augmentation,n_seeds,test_acc_mean,test_acc_std,test_f1_mean,test_f1_std,best_epoch_mean,train_time_min,images_per_s,peak_gpu_gb,params_m,trainable_m
+resnet50_finetune,resnet50.a1_in1k,True,False,1.0,basic,1,97.22,0.0,97.219,0.0,7.0,37.683,170.128,1.684,23.529,23.529
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.01,basic,3,91.967,0.297,91.945,0.294,8.0,0.948,529.454,1.367,21.67,21.67
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.05,basic,3,94.993,0.231,94.985,0.233,7.0,1.427,588.77,1.367,21.67,21.67
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.1,basic,3,95.787,0.107,95.782,0.109,8.0,1.897,599.397,1.367,21.67,21.67
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.25,basic,3,96.85,0.191,96.85,0.192,7.333,3.259,606.338,1.367,21.67,21.67
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.5,basic,3,97.393,0.147,97.394,0.146,7.667,5.713,608.584,1.367,21.67,21.67
+vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,1.0,basic,3,97.913,0.057,97.913,0.056,8.0,10.606,612.323,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.01,basic,3,91.22,0.118,91.216,0.108,7.667,0.966,542.128,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.05,basic,3,94.987,0.333,94.984,0.33,6.667,1.382,600.977,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.1,basic,3,95.837,0.176,95.834,0.171,7.0,1.889,610.692,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.25,basic,3,96.867,0.193,96.865,0.191,7.667,3.205,617.45,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.5,basic,3,97.36,0.131,97.359,0.131,7.0,5.603,620.758,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,1.0,basic,3,97.783,0.127,97.783,0.128,7.333,10.597,609.552,1.446,21.67,21.67
