@@ -1,0 +1,6 @@
+inherit: resnet50_finetune.yaml
+experiment: resnet50_random
+model:
+  pretrained: false
+train:
+  lr_backbone: 1.0e-3

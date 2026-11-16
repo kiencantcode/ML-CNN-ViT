@@ -1,0 +1,4 @@
+inherit: convnext_tiny_finetune.yaml
+experiment: convnext_tiny_frozen
+model:
+  freeze_backbone: true
