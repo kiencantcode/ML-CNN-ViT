@@ -1,5 +1,6 @@
 import timm
 import torch.nn as nn
+from timm.models.vision_transformer import VisionTransformer
 
 from src.data import cifar_data_config
 
@@ -48,12 +49,28 @@ class SmallCNN(nn.Module):
         return self.fc
 
 
+def build_small_vit(model_cfg, num_classes):
+    # Small ViT for 32x32 CIFAR, trained from scratch.
+    # Default size (~1.2M params) matches SmallCNN(width=64) (~1.15M).
+    return VisionTransformer(
+        img_size=model_cfg.get("img_size", 32),
+        patch_size=model_cfg.get("patch_size", 4),
+        embed_dim=model_cfg.get("embed_dim", 128),
+        depth=model_cfg.get("depth", 6),
+        num_heads=model_cfg.get("num_heads", 4),
+        mlp_ratio=model_cfg.get("mlp_ratio", 4.0),
+        drop_rate=model_cfg.get("dropout", 0.1),
+        num_classes=num_classes,
+    )
+
 def build_model(model_cfg, num_classes):
     name = model_cfg["name"]
     if name == "small_cnn":
         model = SmallCNN(num_classes,
                          width=model_cfg.get("width", 64),
                          dropout=model_cfg.get("dropout", 0.1))
+    elif name == "small_vit":
+        model = build_small_vit(model_cfg, num_classes)
     else:
         model = timm.create_model(name, pretrained=model_cfg.get("pretrained", True),
                                   num_classes=num_classes)
@@ -67,7 +84,7 @@ def build_model(model_cfg, num_classes):
 
 
 def get_model_data_config(model, model_cfg, data_cfg):
-    if model_cfg["name"] == "small_cnn":
+    if model_cfg["name"] in ("small_cnn", "small_vit"):
         return cifar_data_config(data_cfg.get("image_size", 32))
     return timm.data.resolve_model_data_config(model)
 

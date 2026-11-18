@@ -1,0 +1,8 @@
+inherit: small_vit_scratch.yaml
+experiment: small_vit_scratch_noclip
+# Same as small_vit_scratch.yaml but WITHOUT gradient clipping, so the recipe
+# matches small_cnn_scratch.yaml, which has no clipping.
+# Use this run for the main CNN vs ViT comparison; the clipped run is an ablation.
+# Watch the log: lr 1e-3 + fp16 from scratch can give loss spikes or NaN without clipping.
+train:
+  grad_clip: null

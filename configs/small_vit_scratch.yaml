@@ -1,0 +1,21 @@
+inherit: base.yaml
+experiment: small_vit_scratch
+# Counterpart of small_cnn_scratch.yaml: same image size, epochs and learning rates,
+# so the only difference between the two runs is the architecture.
+data:
+  image_size: 32
+model:
+  name: small_vit
+  pretrained: false
+  patch_size: 4
+  embed_dim: 128
+  depth: 6
+  num_heads: 4
+  mlp_ratio: 4.0
+  dropout: 0.1
+train:
+  epochs: 60
+  lr_head: 1.0e-3
+  lr_backbone: 1.0e-3
+  grad_clip: 1.0
+  save_last: true
