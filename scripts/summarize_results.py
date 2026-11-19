@@ -24,13 +24,17 @@ MODELS = {
     "resnet50_finetune": ("ResNet-50 (pretrained)", "#2a78d6", "o"),
     "convnext_tiny_finetune": ("ConvNeXt-Tiny (pretrained)", "#eb6834", "s"),
     "small_cnn_scratch": ("SmallCNN (scratch)", "#1baf7a", "^"),
-    "vit_small_finetune": ("ViT-S/16 (pretrained)", "#eda100", "D"),
-    "small_vit_scratch": ("SmallViT (scratch)", "#e87ba4", "v"),
+    "vit_small_finetune_noclip": ("ViT-S/16 (pretrained)", "#eda100", "D"),
+    "small_vit_scratch_noclip": ("SmallViT (scratch)", "#e87ba4", "v"),
+    "vit_small_finetune": ("ViT-S/16 + grad clip (ablation)", "#9c6b00", "D"),
+    "small_vit_scratch": ("SmallViT + grad clip (ablation)", "#a8436f", "v"),
     "resnet50_frozen": ("ResNet-50 (frozen backbone)", "#008300", "o"),
     "convnext_tiny_frozen": ("ConvNeXt-Tiny (frozen backbone)", "#6250d6", "s"),
     "resnet50_random": ("ResNet-50 (random init)", "#e34948", "o"),
 }
 EXTRA_COLORS = ["#008300", "#6250d6", "#e34948"]
+# ablation-only runs: kept out of the learning-curve and augmentation plots
+ABLATION_ONLY = {"resnet50_random", "vit_small_finetune", "small_vit_scratch"}
 AUG_ORDER = ["none", "basic", "strong"]
 
 
@@ -165,7 +169,7 @@ def plot_training_curves(runs, fig_dir):
 
 def plot_learning_curve(table, baseline, fig_dir, augmentation="basic"):
     data = table[(table["augmentation"] == augmentation) & (~table["freeze_backbone"])
-                 & (table["experiment"] != "resnet50_random")]
+                 & (~table["experiment"].isin(ABLATION_ONLY))]
     if data.empty:
         return
     fig, ax = plt.subplots(figsize=(7.5, 4.5))
@@ -260,7 +264,7 @@ def plot_cost(table, fig_dir, fraction=1.0, augmentation="basic"):
 
 
 def plot_augmentation(table, fig_dir):
-    data = table[~table["freeze_backbone"] & (table["experiment"] != "resnet50_random")]
+    data = table[~table["freeze_backbone"] & (~table["experiment"].isin(ABLATION_ONLY))]
     if data["augmentation"].nunique() < 2:
         return
     for fraction, frac_data in data.groupby("train_fraction"):
