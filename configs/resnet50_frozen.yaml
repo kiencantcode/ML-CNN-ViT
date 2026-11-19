@@ -1,0 +1,4 @@
+inherit: resnet50_finetune.yaml
+experiment: resnet50_frozen
+model:
+  freeze_backbone: true
