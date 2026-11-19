@@ -1,5 +1,10 @@
 experiment,model,pretrained,freeze_backbone,train_fraction,augmentation,n_seeds,test_acc_mean,test_acc_std,test_f1_mean,test_f1_std,best_epoch_mean,train_time_min,images_per_s,peak_gpu_gb,params_m,trainable_m
-resnet50_finetune,resnet50.a1_in1k,True,False,1.0,basic,1,97.22,0.0,97.219,0.0,7.0,37.683,170.128,1.684,23.529,23.529
+small_vit_scratch,small_vit,False,False,0.01,basic,3,31.843,0.605,31.599,0.69,41.333,1.289,1525.146,0.095,1.206,1.206
+small_vit_scratch,small_vit,False,False,0.1,basic,3,53.08,0.856,52.814,0.862,54.0,3.817,1600.405,0.095,1.206,1.206
+small_vit_scratch,small_vit,False,False,1.0,basic,3,80.987,0.5,80.936,0.485,54.667,29.164,1598.701,0.095,1.206,1.206
+small_vit_scratch_noclip,small_vit,False,False,0.01,basic,3,32.123,0.271,31.894,0.315,52.0,1.312,1548.722,0.095,1.206,1.206
+small_vit_scratch_noclip,small_vit,False,False,0.1,basic,3,54.583,1.609,54.342,1.659,54.667,3.688,1679.041,0.095,1.206,1.206
+small_vit_scratch_noclip,small_vit,False,False,1.0,basic,3,80.987,0.472,80.911,0.488,53.0,27.391,1705.202,0.095,1.206,1.206
 vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.01,basic,3,91.967,0.297,91.945,0.294,8.0,0.948,529.454,1.367,21.67,21.67
 vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.05,basic,3,94.993,0.231,94.985,0.233,7.0,1.427,588.77,1.367,21.67,21.67
 vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.1,basic,3,95.787,0.107,95.782,0.109,8.0,1.897,599.397,1.367,21.67,21.67
