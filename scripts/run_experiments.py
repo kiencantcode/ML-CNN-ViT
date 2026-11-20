@@ -23,6 +23,8 @@ ABLATION_CONFIGS = [
     "configs/resnet50_frozen.yaml",
     "configs/convnext_tiny_frozen.yaml",
     "configs/resnet50_random.yaml",
+    "configs/vit_small_frozen.yaml",
+    "configs/vit_small_random.yaml",
 ]
 ABLATION_FRACTIONS = [0.1, 1.0]
 

@@ -1,0 +1,6 @@
+inherit: vit_small_finetune_noclip.yaml
+experiment: vit_small_random
+model:
+  pretrained: false
+train:
+  lr_backbone: 1.0e-3
