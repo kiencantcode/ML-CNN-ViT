@@ -25,8 +25,8 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 set_seed(0)
 
 
-def save(fig, name):
-    fig.savefig(OUT / name, dpi=120, bbox_inches="tight")
+def save(fig, name, dpi=120):
+    fig.savefig(OUT / name, dpi=dpi, bbox_inches="tight")
     plt.show()
 
 
@@ -57,11 +57,35 @@ print("images per class:", np.bincount(labels))
 
 fig, axes = plt.subplots(4, 8, figsize=(12, 6.5))
 for ax, idx in zip(axes.flat, np.random.default_rng(0).choice(len(train_set), 32, replace=False)):
-    ax.imshow(train_set.data[idx])
+    ax.imshow(train_set.data[idx], interpolation="nearest")
     ax.set_title(CIFAR10_CLASSES[labels[idx]], fontsize=9)
     ax.axis("off")
 fig.suptitle("CIFAR-10 training images (32 × 32)")
 save(fig, "1_cifar_samples.png")
+
+# %% [markdown]
+# ### 2b. One row per class (for slides and the report)
+# Same number of random images for every class, saved at 300 dpi.
+# "nearest" keeps the 32 × 32 pixels sharp instead of blurring them when enlarged.
+
+# %%
+N_PER_CLASS = 8
+rng = np.random.default_rng(0)
+n_classes = len(CIFAR10_CLASSES)
+fig, axes = plt.subplots(n_classes, N_PER_CLASS, figsize=(N_PER_CLASS * 1.1, n_classes * 1.1))
+for row, class_name in enumerate(CIFAR10_CLASSES):
+    class_indices = rng.choice(np.flatnonzero(labels == row), N_PER_CLASS, replace=False)
+    for col, idx in enumerate(class_indices):
+        ax = axes[row, col]
+        ax.imshow(train_set.data[idx], interpolation="nearest")
+        ax.set_xticks([])
+        ax.set_yticks([])
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+        if col == 0:
+            ax.set_ylabel(class_name, rotation=0, ha="right", va="center", fontsize=11)
+fig.suptitle(f"CIFAR-10: {N_PER_CLASS} random training images per class (32 × 32)", y=0.92)
+save(fig, "1b_cifar_per_class.png", dpi=300)
 
 # %% [markdown]
 # ## 3. Split and learning-curve subsets
