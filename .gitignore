@@ -10,9 +10,20 @@ venv/
 data/*
 !data/.gitkeep
 
-# Training outputs. Checkpoints and logs stay local.
+# Training outputs. Per-run metrics, configs, histories, logs and test predictions are committed;
+# checkpoints and scratch folders stay local.
 outputs/*
 !outputs/.gitkeep
+!outputs/baseline/
+!outputs/logs/
+!outputs/small_cnn_scratch/
+!outputs/resnet50_finetune/
+!outputs/resnet50_frozen/
+!outputs/resnet50_random/
+!outputs/convnext_tiny_finetune/
+!outputs/convnext_tiny_frozen/
+outputs/logs/queue_*.txt
+outputs/logs/remaining_runs.txt
 *.pt
 *.pth
 *.ckpt
@@ -44,3 +55,6 @@ docs/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Training logs in outputs/ are committed (after the *.log rule above)
+!outputs/**/*.log

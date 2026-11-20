@@ -1,0 +1,30 @@
+seed: 0
+output_dir: outputs
+data:
+  name: cifar10
+  root: data
+  image_size: 224
+  val_fraction: 0.1
+  split_seed: 0
+  train_fraction: 0.1
+  augmentation: basic
+  num_workers: 4
+  eval_num_workers: 2
+model:
+  name: convnext_tiny.fb_in1k
+  pretrained: true
+  freeze_backbone: false
+train:
+  epochs: 8
+  batch_size: 32
+  optimizer: adamw
+  lr_head: 0.001
+  lr_backbone: 0.0001
+  weight_decay: 0.05
+  warmup_epochs: 1
+  label_smoothing: 0.0
+  amp: true
+  grad_accum_steps: 1
+  keep_checkpoint: false
+experiment: convnext_tiny_finetune
+progress_bar: false

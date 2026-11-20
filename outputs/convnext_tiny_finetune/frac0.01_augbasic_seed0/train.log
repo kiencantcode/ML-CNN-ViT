@@ -1,0 +1,12 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+run: outputs\convnext_tiny_finetune\frac0.01_augbasic_seed0
+model convnext_tiny.fb_in1k | fraction 0.01 | aug basic | seed 0 | train 450 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.1683 acc 0.3080  val loss 1.8493 acc 0.6956  89s  *best
+epoch   2/8  train loss 1.4084 acc 0.8616  val loss 1.0606 acc 0.8766  3s  *best
+epoch   3/8  train loss 0.6720 acc 0.9420  val loss 0.5815 acc 0.9118  3s  *best
+epoch   4/8  train loss 0.2976 acc 0.9710  val loss 0.3983 acc 0.9226  3s  *best
+epoch   5/8  train loss 0.1488 acc 0.9978  val loss 0.3287 acc 0.9276  3s  *best
+epoch   6/8  train loss 0.0950 acc 1.0000  val loss 0.3090 acc 0.9256  3s
+epoch   7/8  train loss 0.0796 acc 1.0000  val loss 0.2952 acc 0.9306  3s  *best
+epoch   8/8  train loss 0.0714 acc 1.0000  val loss 0.2939 acc 0.9310  3s  *best
+test acc 0.9259  macro-F1 0.9259  (best epoch 8, 3.9 min, peak GPU 2.26 GB)
