@@ -1,0 +1,249 @@
+[2026-11-14T22:58:59] experiments
+63 jobs: 7 finished, 56 to run
+[2026-11-14 22:59:05] start: 56 runs to do (7 already finished)
+[2026-11-14 22:59:05] (1/56) learning_curve: small_cnn_scratch/frac1.0_augbasic_seed0
+[2026-11-15T12:37:18] experiments
+63 jobs: 7 finished, 56 to run
+[2026-11-15 12:37:29] start: 56 runs to do (7 already finished)
+[2026-11-15 12:37:29] (1/56) learning_curve: small_cnn_scratch/frac1.0_augbasic_seed0
+[2026-11-15 12:54:52]     done in 17.4 min: test acc 0.9189  macro-F1 0.9187  (best epoch 59, 16.6 min, peak GPU 0.08 GB)
+[2026-11-15 12:54:52] (2/56) learning_curve: convnext_tiny_finetune/frac1.0_augbasic_seed0
+[2026-11-15 13:37:06]     done in 42.2 min: test acc 0.9820  macro-F1 0.9820  (best epoch 8, 41.2 min, peak GPU 2.26 GB)
+[2026-11-15 13:37:06] (3/56) learning_curve: small_cnn_scratch/frac0.01_augbasic_seed1
+[2026-11-15 13:39:27]     done in 2.4 min: test acc 0.4803  macro-F1 0.4817  (best epoch 57, 1.8 min, peak GPU 0.08 GB)
+[2026-11-15 13:39:27] (4/56) learning_curve: resnet50_finetune/frac0.01_augbasic_seed1
+[2026-11-15 13:43:26]     done in 4.0 min: test acc 0.7344  macro-F1 0.7320  (best epoch 8, 2.9 min, peak GPU 1.69 GB)
+[2026-11-15 13:43:26] (5/56) learning_curve: convnext_tiny_finetune/frac0.01_augbasic_seed1
+[2026-11-15 13:47:46]     done in 4.3 min: test acc 0.9144  macro-F1 0.9142  (best epoch 5, 3.3 min, peak GPU 2.26 GB)
+[2026-11-15 13:47:46] (6/56) learning_curve: small_cnn_scratch/frac0.1_augbasic_seed1
+[2026-11-15 13:51:32]     done in 3.8 min: test acc 0.7751  macro-F1 0.7746  (best epoch 50, 3.1 min, peak GPU 0.08 GB)
+[2026-11-15 13:51:32] (7/56) learning_curve: resnet50_finetune/frac0.1_augbasic_seed1
+[2026-11-15 13:58:38]     done in 7.1 min: test acc 0.9243  macro-F1 0.9239  (best epoch 8, 6.0 min, peak GPU 1.69 GB)
+[2026-11-15 13:58:38] (8/56) learning_curve: convnext_tiny_finetune/frac0.1_augbasic_seed1
+[2026-11-15 14:06:30]     done in 7.9 min: test acc 0.9648  macro-F1 0.9647  (best epoch 6, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 14:06:30] (9/56) learning_curve: small_cnn_scratch/frac1.0_augbasic_seed1
+[2026-11-15 14:23:44]     done in 17.2 min: test acc 0.9193  macro-F1 0.9191  (best epoch 53, 16.7 min, peak GPU 0.08 GB)
+[2026-11-15 14:23:44] (10/56) learning_curve: resnet50_finetune/frac1.0_augbasic_seed1
+[2026-11-15 15:09:39]     done in 45.9 min: test acc 0.9699  macro-F1 0.9699  (best epoch 8, 44.7 min, peak GPU 1.69 GB)
+[2026-11-15 15:09:39] (11/56) learning_curve: convnext_tiny_finetune/frac1.0_augbasic_seed1
+[2026-11-15 15:53:50]     done in 44.2 min: test acc 0.9815  macro-F1 0.9815  (best epoch 8, 43.1 min, peak GPU 2.26 GB)
+[2026-11-15 15:53:50] (12/56) learning_curve: small_cnn_scratch/frac0.01_augbasic_seed2
+[2026-11-15 15:56:27]     done in 2.6 min: test acc 0.5055  macro-F1 0.5046  (best epoch 49, 2.0 min, peak GPU 0.08 GB)
+[2026-11-15 15:56:27] (13/56) learning_curve: resnet50_finetune/frac0.01_augbasic_seed2
+[2026-11-15 16:00:48]     done in 4.3 min: test acc 0.7403  macro-F1 0.7379  (best epoch 8, 3.3 min, peak GPU 1.68 GB)
+[2026-11-15 16:00:48] (14/56) learning_curve: convnext_tiny_finetune/frac0.01_augbasic_seed2
+[2026-11-15 16:05:09]     done in 4.4 min: test acc 0.9239  macro-F1 0.9237  (best epoch 5, 3.4 min, peak GPU 2.26 GB)
+[2026-11-15 16:05:09] (15/56) learning_curve: small_cnn_scratch/frac0.1_augbasic_seed2
+[2026-11-15 16:08:53]     done in 3.7 min: test acc 0.7854  macro-F1 0.7851  (best epoch 57, 3.1 min, peak GPU 0.08 GB)
+[2026-11-15 16:08:53] (16/56) learning_curve: resnet50_finetune/frac0.1_augbasic_seed2
+[2026-11-15 16:15:54]     done in 7.0 min: test acc 0.9292  macro-F1 0.9290  (best epoch 7, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 16:15:54] (17/56) learning_curve: convnext_tiny_finetune/frac0.1_augbasic_seed2
+[2026-11-15 16:23:44]     done in 7.8 min: test acc 0.9686  macro-F1 0.9686  (best epoch 7, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 16:23:45] (18/56) learning_curve: small_cnn_scratch/frac1.0_augbasic_seed2
+[2026-11-15 16:41:15]     done in 17.5 min: test acc 0.9169  macro-F1 0.9168  (best epoch 53, 16.9 min, peak GPU 0.08 GB)
+[2026-11-15 16:41:15] (19/56) learning_curve: resnet50_finetune/frac1.0_augbasic_seed2
+[2026-11-15 17:19:28]     done in 38.2 min: test acc 0.9698  macro-F1 0.9698  (best epoch 6, 37.1 min, peak GPU 1.68 GB)
+[2026-11-15 17:19:28] (20/56) learning_curve: convnext_tiny_finetune/frac1.0_augbasic_seed2
+[2026-11-15 18:03:29]     done in 44.0 min: test acc 0.9803  macro-F1 0.9803  (best epoch 7, 42.9 min, peak GPU 2.26 GB)
+[2026-11-15 18:03:29] (21/56) augmentation: small_cnn_scratch/frac0.1_augnone_seed0
+[2026-11-15 18:07:23]     done in 3.9 min: test acc 0.7174  macro-F1 0.7164  (best epoch 49, 3.1 min, peak GPU 0.08 GB)
+[2026-11-15 18:07:23] (22/56) augmentation: resnet50_finetune/frac0.1_augnone_seed0
+[2026-11-15 18:14:30]     done in 7.1 min: test acc 0.9232  macro-F1 0.9231  (best epoch 8, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 18:14:30] (23/56) augmentation: convnext_tiny_finetune/frac0.1_augnone_seed0
+[2026-11-15 18:22:21]     done in 7.9 min: test acc 0.9645  macro-F1 0.9645  (best epoch 7, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 18:22:21] (24/56) augmentation: small_cnn_scratch/frac0.1_augstrong_seed0
+[2026-11-15 18:26:13]     done in 3.9 min: test acc 0.7957  macro-F1 0.7955  (best epoch 59, 3.3 min, peak GPU 0.08 GB)
+[2026-11-15 18:26:13] (25/56) augmentation: resnet50_finetune/frac0.1_augstrong_seed0
+[2026-11-15 18:33:15]     done in 7.0 min: test acc 0.9303  macro-F1 0.9301  (best epoch 7, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 18:33:15] (26/56) augmentation: convnext_tiny_finetune/frac0.1_augstrong_seed0
+[2026-11-15 18:41:11]     done in 7.9 min: test acc 0.9692  macro-F1 0.9692  (best epoch 8, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 18:41:11] (27/56) augmentation: small_cnn_scratch/frac0.1_augnone_seed1
+[2026-11-15 18:44:55]     done in 3.7 min: test acc 0.7103  macro-F1 0.7096  (best epoch 35, 3.1 min, peak GPU 0.08 GB)
+[2026-11-15 18:44:55] (28/56) augmentation: resnet50_finetune/frac0.1_augnone_seed1
+[2026-11-15 18:51:58]     done in 7.1 min: test acc 0.9172  macro-F1 0.9170  (best epoch 6, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 18:51:58] (29/56) augmentation: convnext_tiny_finetune/frac0.1_augnone_seed1
+[2026-11-15 18:59:48]     done in 7.8 min: test acc 0.9637  macro-F1 0.9637  (best epoch 5, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 18:59:48] (30/56) augmentation: small_cnn_scratch/frac0.1_augstrong_seed1
+[2026-11-15 19:03:41]     done in 3.9 min: test acc 0.7936  macro-F1 0.7926  (best epoch 56, 3.3 min, peak GPU 0.08 GB)
+[2026-11-15 19:03:41] (31/56) augmentation: resnet50_finetune/frac0.1_augstrong_seed1
+[2026-11-15 19:10:48]     done in 7.1 min: test acc 0.9261  macro-F1 0.9256  (best epoch 8, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 19:10:48] (32/56) augmentation: convnext_tiny_finetune/frac0.1_augstrong_seed1
+[2026-11-15 19:18:40]     done in 7.9 min: test acc 0.9650  macro-F1 0.9650  (best epoch 8, 6.8 min, peak GPU 2.26 GB)
+[2026-11-15 19:18:40] (33/56) augmentation: small_cnn_scratch/frac0.1_augnone_seed2
+[2026-11-15 19:22:24]     done in 3.7 min: test acc 0.7253  macro-F1 0.7247  (best epoch 60, 3.1 min, peak GPU 0.08 GB)
+[2026-11-15 19:22:24] (34/56) augmentation: resnet50_finetune/frac0.1_augnone_seed2
+[2026-11-15 19:29:28]     done in 7.1 min: test acc 0.9232  macro-F1 0.9232  (best epoch 7, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 19:29:28] (35/56) augmentation: convnext_tiny_finetune/frac0.1_augnone_seed2
+[2026-11-15 19:37:32]     done in 8.1 min: test acc 0.9622  macro-F1 0.9622  (best epoch 6, 6.9 min, peak GPU 2.26 GB)
+[2026-11-15 19:37:32] (36/56) augmentation: small_cnn_scratch/frac0.1_augstrong_seed2
+[2026-11-15 19:41:23]     done in 3.9 min: test acc 0.8026  macro-F1 0.8022  (best epoch 56, 3.3 min, peak GPU 0.08 GB)
+[2026-11-15 19:41:24] (37/56) augmentation: resnet50_finetune/frac0.1_augstrong_seed2
+[2026-11-15 19:48:25]     done in 7.0 min: test acc 0.9278  macro-F1 0.9276  (best epoch 7, 5.9 min, peak GPU 1.69 GB)
+[2026-11-15 19:48:25] (38/56) augmentation: convnext_tiny_finetune/frac0.1_augstrong_seed2
+[2026-11-15 19:56:19]     done in 7.9 min: test acc 0.9662  macro-F1 0.9662  (best epoch 6, 6.9 min, peak GPU 2.26 GB)
+[2026-11-15 19:56:19] (39/56) ablation: resnet50_frozen/frac0.1_augbasic_seed0
+[2026-11-15 20:01:12]     done in 4.9 min: test acc 0.8822  macro-F1 0.8819  (best epoch 6, 3.6 min, peak GPU 0.43 GB)
+[2026-11-15 20:01:12] (40/56) ablation: convnext_tiny_frozen/frac0.1_augbasic_seed0
+[2026-11-15 20:06:05]     done in 4.9 min: test acc 0.9184  macro-F1 0.9182  (best epoch 6, 3.8 min, peak GPU 0.39 GB)
+[2026-11-15 20:06:05] (41/56) ablation: resnet50_random/frac0.1_augbasic_seed0
+[2026-11-15 20:13:08]     done in 7.0 min: test acc 0.5865  macro-F1 0.5822  (best epoch 8, 6.0 min, peak GPU 1.68 GB)
+[2026-11-15 20:13:08] (42/56) ablation: resnet50_frozen/frac1.0_augbasic_seed0
+[2026-11-15 20:29:53]     done in 16.7 min: test acc 0.9166  macro-F1 0.9163  (best epoch 6, 15.7 min, peak GPU 0.43 GB)
+[2026-11-15 20:29:53] (43/56) ablation: convnext_tiny_frozen/frac1.0_augbasic_seed0
+[2026-11-15 20:47:20]     done in 17.5 min: test acc 0.9390  macro-F1 0.9389  (best epoch 5, 16.4 min, peak GPU 0.39 GB)
+[2026-11-15 20:47:20] (44/56) ablation: resnet50_random/frac1.0_augbasic_seed0
+[2026-11-15 21:25:29]     done in 38.2 min: test acc 0.8552  macro-F1 0.8543  (best epoch 8, 37.1 min, peak GPU 1.68 GB)
+[2026-11-15 21:25:29] (45/56) ablation: resnet50_frozen/frac0.1_augbasic_seed1
+[2026-11-15 21:30:06]     done in 4.6 min: test acc 0.8789  macro-F1 0.8781  (best epoch 8, 3.6 min, peak GPU 0.43 GB)
+[2026-11-15 21:30:06] (46/56) ablation: convnext_tiny_frozen/frac0.1_augbasic_seed1
+[2026-11-15 21:35:02]     done in 4.9 min: test acc 0.9190  macro-F1 0.9188  (best epoch 8, 3.8 min, peak GPU 0.39 GB)
+[2026-11-15 21:35:02] (47/56) ablation: resnet50_random/frac0.1_augbasic_seed1
+[2026-11-15 21:42:53]     done in 7.9 min: test acc 0.5668  macro-F1 0.5598  (best epoch 8, 6.6 min, peak GPU 1.68 GB)
+[2026-11-15 21:42:53] (48/56) ablation: resnet50_frozen/frac1.0_augbasic_seed1
+[2026-11-15 22:00:23]     done in 17.5 min: test acc 0.9179  macro-F1 0.9176  (best epoch 6, 16.3 min, peak GPU 0.43 GB)
+[2026-11-15 22:00:23] (49/56) ablation: convnext_tiny_frozen/frac1.0_augbasic_seed1
+[2026-11-15 22:18:15]     done in 17.9 min: test acc 0.9396  macro-F1 0.9395  (best epoch 5, 16.5 min, peak GPU 0.39 GB)
+[2026-11-15 22:18:15] (50/56) ablation: resnet50_random/frac1.0_augbasic_seed1
+[2026-11-15 23:01:19]     done in 43.1 min: test acc 0.8543  macro-F1 0.8541  (best epoch 8, 41.8 min, peak GPU 1.68 GB)
+[2026-11-15 23:01:19] (51/56) ablation: resnet50_frozen/frac0.1_augbasic_seed2
+[2026-11-15 23:06:49]     done in 5.5 min: test acc 0.8801  macro-F1 0.8795  (best epoch 8, 4.2 min, peak GPU 0.43 GB)
+[2026-11-15 23:06:49] (52/56) ablation: convnext_tiny_frozen/frac0.1_augbasic_seed2
+[2026-11-15 23:13:06]     done in 6.3 min: test acc 0.9207  macro-F1 0.9205  (best epoch 7, 4.9 min, peak GPU 0.39 GB)
+[2026-11-15 23:13:06] (53/56) ablation: resnet50_random/frac0.1_augbasic_seed2
+[2026-11-15 23:22:30]     done in 9.4 min: test acc 0.5437  macro-F1 0.5391  (best epoch 8, 8.0 min, peak GPU 1.68 GB)
+[2026-11-15 23:22:30] (54/56) ablation: resnet50_frozen/frac1.0_augbasic_seed2
+[2026-11-15T23:34:31] CIFAR-10-C
+[2026-11-15T23:34:32] Grad-CAM
+[2026-11-15T23:34:32] summary
+[2026-11-15T23:34:32] all done
+[2026-11-18T23:54:39] experiments
+63 jobs: 60 finished, 3 to run
+[2026-11-18 23:54:42] start: 3 runs to do (60 already finished)
+[2026-11-18 23:54:42] (1/3) ablation: resnet50_frozen/frac1.0_augbasic_seed2
+[2026-11-19 00:10:48]     done in 16.1 min: test acc 0.9177  macro-F1 0.9175  (best epoch 7, 14.8 min, peak GPU 0.43 GB)
+[2026-11-19 00:10:48] (2/3) ablation: convnext_tiny_frozen/frac1.0_augbasic_seed2
+[2026-11-19 00:27:36]     done in 16.8 min: test acc 0.9396  macro-F1 0.9395  (best epoch 7, 15.7 min, peak GPU 0.39 GB)
+[2026-11-19 00:27:36] (3/3) ablation: resnet50_random/frac1.0_augbasic_seed2
+[2026-11-19 01:04:52]     done in 37.3 min: test acc 0.8536  macro-F1 0.8531  (best epoch 8, 36.2 min, peak GPU 1.68 GB)
+[2026-11-19 01:04:52] finished: 3 ok, 0 failed
+[2026-11-19T01:04:53] CIFAR-10-C
+2000 test images ├ù (1 clean + 19 corruptions ├ù 5 severities) = 192,000 images per model
+resnet50_finetune/frac1.0_augbasic_seed0: clean 97.35%, corrupted mean 76.85%, blur 77.17% (6.0 min) -> E:\Machine Learning\results\cifar10c\resnet50_finetune_frac1.0_augbasic_seed0.json
+resnet50_finetune/frac1.0_augbasic_seed1: clean 97.00%, corrupted mean 76.15%, blur 78.63% (6.0 min) -> E:\Machine Learning\results\cifar10c\resnet50_finetune_frac1.0_augbasic_seed1.json
+resnet50_finetune/frac1.0_augbasic_seed2: clean 97.00%, corrupted mean 77.55%, blur 78.39% (5.9 min) -> E:\Machine Learning\results\cifar10c\resnet50_finetune_frac1.0_augbasic_seed2.json
+convnext_tiny_finetune/frac1.0_augbasic_seed0: clean 98.15%, corrupted mean 88.55%, blur 87.70% (6.9 min) -> E:\Machine Learning\results\cifar10c\convnext_tiny_finetune_frac1.0_augbasic_seed0.json
+convnext_tiny_finetune/frac1.0_augbasic_seed1: clean 97.95%, corrupted mean 87.04%, blur 87.80% (6.8 min) -> E:\Machine Learning\results\cifar10c\convnext_tiny_finetune_frac1.0_augbasic_seed1.json
+convnext_tiny_finetune/frac1.0_augbasic_seed2: clean 97.75%, corrupted mean 87.38%, blur 87.95% (6.8 min) -> E:\Machine Learning\results\cifar10c\convnext_tiny_finetune_frac1.0_augbasic_seed2.json
+small_cnn_scratch/frac1.0_augbasic_seed0: clean 92.05%, corrupted mean 71.49%, blur 69.32% (0.7 min) -> E:\Machine Learning\results\cifar10c\small_cnn_scratch_frac1.0_augbasic_seed0.json
+small_cnn_scratch/frac1.0_augbasic_seed1: clean 92.45%, corrupted mean 70.00%, blur 67.13% (0.7 min) -> E:\Machine Learning\results\cifar10c\small_cnn_scratch_frac1.0_augbasic_seed1.json
+small_cnn_scratch/frac1.0_augbasic_seed2: clean 91.00%, corrupted mean 70.17%, blur 66.82% (0.7 min) -> E:\Machine Learning\results\cifar10c\small_cnn_scratch_frac1.0_augbasic_seed2.json
+[2026-11-19T01:45:39] Grad-CAM
+saved E:\Machine Learning\results\figures\gradcam\gradcam_shared_a.png
+saved E:\Machine Learning\results\figures\gradcam\gradcam_shared_b.png
+saved E:\Machine Learning\results\figures\gradcam\gradcam_errors_resnet50_finetune.png
+saved E:\Machine Learning\results\figures\gradcam\gradcam_errors_convnext_tiny_finetune.png
+saved E:\Machine Learning\results\figures\gradcam\gradcam_errors_small_cnn_scratch.png
+[2026-11-19T01:46:06] summary
+saved results\summary.md
+63 runs, 21 settings
+            experiment  train_fraction augmentation  n_seeds  test_acc_mean  test_acc_std
+convnext_tiny_finetune            0.01        basic        3         92.140         0.614
+convnext_tiny_finetune            0.10        basic        3         96.687         0.192
+convnext_tiny_finetune            0.10         none        3         96.347         0.117
+convnext_tiny_finetune            0.10       strong        3         96.680         0.216
+convnext_tiny_finetune            1.00        basic        3         98.127         0.087
+  convnext_tiny_frozen            0.10        basic        3         91.937         0.119
+  convnext_tiny_frozen            1.00        basic        3         93.940         0.035
+     resnet50_finetune            0.01        basic        3         73.623         0.353
+     resnet50_finetune            0.10        basic        3         92.697         0.248
+     resnet50_finetune            0.10         none        3         92.120         0.346
+     resnet50_finetune            0.10       strong        3         92.807         0.211
+     resnet50_finetune            1.00        basic        3         97.063         0.136
+       resnet50_frozen            0.10        basic        3         88.040         0.167
+       resnet50_frozen            1.00        basic        3         91.740         0.070
+       resnet50_random            0.10        basic        3         56.567         2.142
+       resnet50_random            1.00        basic        3         85.437         0.080
+     small_cnn_scratch            0.01        basic        3         49.567         1.348
+     small_cnn_scratch            0.10        basic        3         77.990         0.519
+     small_cnn_scratch            0.10         none        3         71.767         0.750
+     small_cnn_scratch            0.10       strong        3         79.730         0.471
+     small_cnn_scratch            1.00        basic        3         91.837         0.129
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.01_augbasic_seed0.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.01_augbasic_seed1.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.01_augbasic_seed2.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augnone_seed0.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augnone_seed1.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augnone_seed2.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augstrong_seed0.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augstrong_seed1.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac0.1_augstrong_seed2.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\convnext_tiny_finetune_frac1.0_augbasic_seed2.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\convnext_tiny_frozen_frac1.0_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_finetune_frac0.01_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_finetune_frac0.01_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_finetune_frac0.01_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augnone_seed0.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augnone_seed1.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augnone_seed2.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augstrong_seed0.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augstrong_seed1.png
+saved results\figures\training_curves\resnet50_finetune_frac0.1_augstrong_seed2.png
+saved results\figures\training_curves\resnet50_finetune_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_finetune_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_finetune_frac1.0_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_frozen_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_frozen_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_frozen_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_frozen_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_frozen_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_frozen_frac1.0_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_random_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_random_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_random_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\resnet50_random_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\resnet50_random_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\resnet50_random_frac1.0_augbasic_seed2.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.01_augbasic_seed0.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.01_augbasic_seed1.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.01_augbasic_seed2.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augbasic_seed0.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augbasic_seed1.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augbasic_seed2.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augnone_seed0.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augnone_seed1.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augnone_seed2.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augstrong_seed0.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augstrong_seed1.png
+saved results\figures\training_curves\small_cnn_scratch_frac0.1_augstrong_seed2.png
+saved results\figures\training_curves\small_cnn_scratch_frac1.0_augbasic_seed0.png
+saved results\figures\training_curves\small_cnn_scratch_frac1.0_augbasic_seed1.png
+saved results\figures\training_curves\small_cnn_scratch_frac1.0_augbasic_seed2.png
+saved results\figures\learning_curve_basic.png
+saved results\figures\learning_curve_none.png
+saved results\figures\learning_curve_strong.png
+saved results\figures\model_comparison_frac1_basic.png
+saved results\figures\accuracy_vs_cost_frac1_basic.png
+saved results\figures\augmentation_frac0.1.png
+saved results\figures\ablation.png
+saved results\figures\confusion_convnext_tiny_finetune_frac1_basic.png
+saved results\figures\confusion_resnet50_finetune_frac1_basic.png
+saved results\figures\confusion_resnet50_random_frac1_basic.png
+saved results\figures\confusion_small_cnn_scratch_frac1_basic.png
+saved results\cifar10c_summary.md
+saved results\figures\cifar10c_severity.png
+saved results\figures\cifar10c_groups.png
+saved results\figures\cifar10c_blur.png
+[2026-11-19T01:46:35] all done

@@ -1,0 +1,12 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+run: outputs\resnet50_finetune\frac0.01_augbasic_seed1
+model resnet50.a1_in1k | fraction 0.01 | aug basic | seed 1 | train 450 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.2967 acc 0.1183  val loss 2.2417 acc 0.3004  55s  *best
+epoch   2/8  train loss 2.1695 acc 0.3438  val loss 2.1333 acc 0.4422  3s  *best
+epoch   3/8  train loss 1.9883 acc 0.5938  val loss 1.9219 acc 0.6362  2s  *best
+epoch   4/8  train loss 1.7993 acc 0.6540  val loss 1.7313 acc 0.6488  2s  *best
+epoch   5/8  train loss 1.6077 acc 0.7210  val loss 1.5732 acc 0.7140  2s  *best
+epoch   6/8  train loss 1.4639 acc 0.7879  val loss 1.4599 acc 0.7304  3s  *best
+epoch   7/8  train loss 1.4208 acc 0.7500  val loss 1.4174 acc 0.7334  3s  *best
+epoch   8/8  train loss 1.3690 acc 0.7879  val loss 1.4069 acc 0.7378  3s  *best
+test acc 0.7344  macro-F1 0.7320  (best epoch 8, 2.9 min, peak GPU 1.69 GB)

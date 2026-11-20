@@ -1,0 +1,11 @@
+run: outputs\convnext_tiny_finetune\frac0.1_augstrong_seed1
+model convnext_tiny.fb_in1k | fraction 0.1 | aug strong | seed 1 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 1.3276 acc 0.6522  val loss 0.2415 acc 0.9320  91s  *best
+epoch   2/8  train loss 0.2657 acc 0.9161  val loss 0.1369 acc 0.9578  29s  *best
+epoch   3/8  train loss 0.1463 acc 0.9531  val loss 0.1081 acc 0.9652  29s  *best
+epoch   4/8  train loss 0.0860 acc 0.9746  val loss 0.1010 acc 0.9664  29s  *best
+epoch   5/8  train loss 0.0638 acc 0.9799  val loss 0.0998 acc 0.9674  29s  *best
+epoch   6/8  train loss 0.0582 acc 0.9801  val loss 0.0957 acc 0.9680  30s  *best
+epoch   7/8  train loss 0.0385 acc 0.9884  val loss 0.0925 acc 0.9692  30s  *best
+epoch   8/8  train loss 0.0344 acc 0.9897  val loss 0.0925 acc 0.9700  30s  *best
+test acc 0.9650  macro-F1 0.9650  (best epoch 8, 6.8 min, peak GPU 2.26 GB)

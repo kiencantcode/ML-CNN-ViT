@@ -1,0 +1,68 @@
+{
+  "experiment": "convnext_tiny_finetune",
+  "model": "convnext_tiny.fb_in1k",
+  "pretrained": true,
+  "freeze_backbone": false,
+  "train_fraction": 0.1,
+  "augmentation": "none",
+  "seed": 2,
+  "n_train": 4500,
+  "test_acc": 0.9622,
+  "test_f1": 0.9621631399358535,
+  "test_loss": 0.12290817141532898,
+  "best_val_acc": 0.9678,
+  "best_epoch": 6,
+  "epochs": 8,
+  "params_total": 27827818,
+  "params_trainable": 27827818,
+  "train_time_s": 411.3650196999988,
+  "first_epoch_time_s": 89.42370300000039,
+  "epoch_time_mean_s": 29.16046631428565,
+  "train_images_per_s": 154.31851985835561,
+  "peak_gpu_mem_gb": 2.2643208503723145,
+  "hardware": {
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "os": "Windows 10",
+    "python": "3.11.18",
+    "torch": "2.11.0+cu128",
+    "timm": "1.0.31",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "gpu_memory_gb": 4.0
+  },
+  "config": {
+    "seed": 2,
+    "output_dir": "outputs",
+    "data": {
+      "name": "cifar10",
+      "root": "data",
+      "image_size": 224,
+      "val_fraction": 0.1,
+      "split_seed": 0,
+      "train_fraction": 0.1,
+      "augmentation": "none",
+      "num_workers": 4,
+      "eval_num_workers": 2
+    },
+    "model": {
+      "name": "convnext_tiny.fb_in1k",
+      "pretrained": true,
+      "freeze_backbone": false
+    },
+    "train": {
+      "epochs": 8,
+      "batch_size": 32,
+      "optimizer": "adamw",
+      "lr_head": 0.001,
+      "lr_backbone": 0.0001,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "label_smoothing": 0.0,
+      "amp": true,
+      "grad_accum_steps": 1,
+      "keep_checkpoint": false
+    },
+    "experiment": "convnext_tiny_finetune",
+    "progress_bar": false
+  }
+}

@@ -1,0 +1,11 @@
+run: outputs\resnet50_random\frac0.1_augbasic_seed0
+model resnet50.a1_in1k | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.0280 acc 0.2455  val loss 1.9813 acc 0.2874  78s  *best
+epoch   2/8  train loss 1.8585 acc 0.3129  val loss 1.8043 acc 0.3388  24s  *best
+epoch   3/8  train loss 1.7117 acc 0.3592  val loss 1.6860 acc 0.3740  25s  *best
+epoch   4/8  train loss 1.5731 acc 0.4179  val loss 1.5025 acc 0.4460  25s  *best
+epoch   5/8  train loss 1.4072 acc 0.4759  val loss 1.3606 acc 0.4938  25s  *best
+epoch   6/8  train loss 1.2846 acc 0.5266  val loss 1.2502 acc 0.5396  25s  *best
+epoch   7/8  train loss 1.1741 acc 0.5739  val loss 1.1704 acc 0.5764  25s  *best
+epoch   8/8  train loss 1.1242 acc 0.5915  val loss 1.1551 acc 0.5808  25s  *best
+test acc 0.5865  macro-F1 0.5822  (best epoch 8, 6.0 min, peak GPU 1.68 GB)
