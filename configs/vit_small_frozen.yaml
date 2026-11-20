@@ -1,0 +1,6 @@
+inherit: vit_small_finetune_noclip.yaml
+experiment: vit_small_frozen
+# Linear probe: ImageNet-1k ViT-S/16 with a frozen backbone, only the new head trains.
+# ViT counterpart of resnet50_frozen.yaml and convnext_tiny_frozen.yaml.
+model:
+  freeze_backbone: true
