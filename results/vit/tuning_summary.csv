@@ -1,0 +1,7 @@
+experiment,lr,current,best_val_acc,test_acc,best_epoch
+small_vit_scratch_noclip,3e-4,False,81.78,81.94,57
+small_vit_scratch_noclip,1e-3,True,80.64,80.94,55
+small_vit_scratch_noclip,3e-3,False,72.04,71.54,55
+vit_small_finetune_noclip,3e-5,False,98.36,98.14,7
+vit_small_finetune_noclip,1e-4,True,97.98,97.72,7
+vit_small_finetune_noclip,3e-4,False,97.16,97.01,8

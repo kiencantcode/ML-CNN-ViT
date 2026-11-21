@@ -4,6 +4,8 @@ small_vit_scratch,small_vit,False,False,0.1,basic,3,53.08,0.856,52.814,0.862,54.
 small_vit_scratch,small_vit,False,False,1.0,basic,3,80.987,0.5,80.936,0.485,54.667,29.164,1598.701,0.095,1.206,1.206
 small_vit_scratch_noclip,small_vit,False,False,0.01,basic,3,32.123,0.271,31.894,0.315,52.0,1.312,1548.722,0.095,1.206,1.206
 small_vit_scratch_noclip,small_vit,False,False,0.1,basic,3,54.583,1.609,54.342,1.659,54.667,3.688,1679.041,0.095,1.206,1.206
+small_vit_scratch_noclip,small_vit,False,False,0.1,none,3,45.733,0.301,45.242,0.464,30.0,3.362,1901.986,0.095,1.206,1.206
+small_vit_scratch_noclip,small_vit,False,False,0.1,strong,3,54.273,0.95,53.939,0.974,53.333,3.677,1699.385,0.095,1.206,1.206
 small_vit_scratch_noclip,small_vit,False,False,1.0,basic,3,80.987,0.472,80.911,0.488,53.0,27.391,1705.202,0.095,1.206,1.206
 vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.01,basic,3,91.967,0.297,91.945,0.294,8.0,0.948,529.454,1.367,21.67,21.67
 vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,0.05,basic,3,94.993,0.231,94.985,0.233,7.0,1.427,588.77,1.367,21.67,21.67
@@ -14,6 +16,12 @@ vit_small_finetune,deit_small_patch16_224.fb_in1k,True,False,1.0,basic,3,97.913,
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.01,basic,3,91.22,0.118,91.216,0.108,7.667,0.966,542.128,1.367,21.67,21.67
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.05,basic,3,94.987,0.333,94.984,0.33,6.667,1.382,600.977,1.367,21.67,21.67
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.1,basic,3,95.837,0.176,95.834,0.171,7.0,1.889,610.692,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.1,none,3,95.367,0.217,95.366,0.211,6.667,1.934,610.141,1.367,21.67,21.67
+vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.1,strong,3,95.997,0.257,95.996,0.261,8.0,1.84,612.103,1.367,21.67,21.67
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.25,basic,3,96.867,0.193,96.865,0.191,7.667,3.205,617.45,1.367,21.67,21.67
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,0.5,basic,3,97.36,0.131,97.359,0.131,7.0,5.603,620.758,1.367,21.67,21.67
 vit_small_finetune_noclip,deit_small_patch16_224.fb_in1k,True,False,1.0,basic,3,97.783,0.127,97.783,0.128,7.333,10.597,609.552,1.446,21.67,21.67
+vit_small_frozen,deit_small_patch16_224.fb_in1k,True,True,0.1,basic,3,92.597,0.239,92.597,0.236,5.667,1.09,1613.892,0.187,21.67,0.004
+vit_small_frozen,deit_small_patch16_224.fb_in1k,True,True,1.0,basic,3,93.873,0.055,93.872,0.058,6.0,4.297,1667.227,0.187,21.67,0.004
+vit_small_random,deit_small_patch16_224.fb_in1k,False,False,0.1,basic,3,35.99,1.247,35.264,1.482,8.0,1.907,601.065,1.367,21.67,21.67
+vit_small_random,deit_small_patch16_224.fb_in1k,False,False,1.0,basic,3,32.61,1.612,31.712,1.77,8.0,10.503,617.178,1.367,21.67,21.67
