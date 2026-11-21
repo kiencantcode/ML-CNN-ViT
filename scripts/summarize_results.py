@@ -24,14 +24,14 @@ MODELS = {
     "resnet50_finetune": ("ResNet-50 (pretrained)", "#2a78d6", "o"),
     "convnext_tiny_finetune": ("ConvNeXt-Tiny (pretrained)", "#eb6834", "s"),
     "small_cnn_scratch": ("SmallCNN (scratch)", "#1baf7a", "^"),
-    "vit_small_finetune_noclip": ("ViT-S/16 (pretrained)", "#eda100", "D"),
+    "vit_small_finetune_noclip": ("DeiT-S (pretrained)", "#eda100", "D"),
     "small_vit_scratch_noclip": ("SmallViT (scratch)", "#e87ba4", "v"),
-    "vit_small_finetune": ("ViT-S/16 + grad clip (ablation)", "#9c6b00", "D"),
+    "vit_small_finetune": ("DeiT-S + grad clip (ablation)", "#9c6b00", "D"),
     "small_vit_scratch": ("SmallViT + grad clip (ablation)", "#a8436f", "v"),
     "resnet50_frozen": ("ResNet-50 (frozen backbone)", "#008300", "o"),
     "convnext_tiny_frozen": ("ConvNeXt-Tiny (frozen backbone)", "#6250d6", "s"),
     "resnet50_random": ("ResNet-50 (random init)", "#e34948", "o"),
-    "vit_small_frozen": ("ViT-S/16 (frozen backbone)", "#b07d00", "D"),
+    "vit_small_frozen": ("DeiT-S (frozen backbone)", "#b07d00", "D"),
     "vit_small_random": ("ViT-S/16 (random init)", "#c2410c", "D"),
 }
 EXTRA_COLORS = ["#008300", "#6250d6", "#e34948"]
