@@ -1,0 +1,11 @@
+run: outputs/vit_small_random/frac0.1_augbasic_seed0
+model deit_small_patch16_224.fb_in1k | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.1460 acc 0.2040  val loss 2.0418 acc 0.2398  8s  *best
+epoch   2/8  train loss 2.0285 acc 0.2301  val loss 2.0058 acc 0.2554  7s  *best
+epoch   3/8  train loss 1.9633 acc 0.2578  val loss 1.9393 acc 0.2654  8s  *best
+epoch   4/8  train loss 1.9010 acc 0.2672  val loss 1.8911 acc 0.2884  7s  *best
+epoch   5/8  train loss 1.8950 acc 0.2833  val loss 1.9605 acc 0.2574  8s
+epoch   6/8  train loss 1.8431 acc 0.2955  val loss 1.8133 acc 0.3202  7s  *best
+epoch   7/8  train loss 1.7548 acc 0.3480  val loss 1.7450 acc 0.3400  7s  *best
+epoch   8/8  train loss 1.7040 acc 0.3571  val loss 1.7333 acc 0.3514  8s  *best
+test acc 0.3524  macro-F1 0.3444  (best epoch 8, 1.9 min, peak GPU 1.37 GB)

@@ -1,0 +1,12 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+run: outputs/vit_small_frozen/frac1.0_augbasic_seed2
+model deit_small_patch16_224.fb_in1k | fraction 1.0 | aug basic | seed 2 | train 45000 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 0.6610 acc 0.8199  val loss 0.2117 acc 0.9304  28s  *best
+epoch   2/8  train loss 0.2451 acc 0.9199  val loss 0.1836 acc 0.9388  27s  *best
+epoch   3/8  train loss 0.2233 acc 0.9244  val loss 0.1825 acc 0.9386  27s
+epoch   4/8  train loss 0.2137 acc 0.9276  val loss 0.1715 acc 0.9430  26s  *best
+epoch   5/8  train loss 0.2065 acc 0.9311  val loss 0.1758 acc 0.9410  27s
+epoch   6/8  train loss 0.2009 acc 0.9326  val loss 0.1731 acc 0.9406  27s
+epoch   7/8  train loss 0.1980 acc 0.9324  val loss 0.1724 acc 0.9406  27s
+epoch   8/8  train loss 0.1930 acc 0.9355  val loss 0.1717 acc 0.9418  27s
+test acc 0.9391  macro-F1 0.9391  (best epoch 4, 4.3 min, peak GPU 0.19 GB)

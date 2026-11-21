@@ -22,6 +22,12 @@ outputs/*
 !outputs/resnet50_random/
 !outputs/convnext_tiny_finetune/
 !outputs/convnext_tiny_frozen/
+!outputs/vit_small_finetune/
+!outputs/vit_small_finetune_noclip/
+!outputs/small_vit_scratch/
+!outputs/small_vit_scratch_noclip/
+!outputs/vit_small_frozen/
+!outputs/vit_small_random/
 outputs/logs/queue_*.txt
 outputs/logs/remaining_runs.txt
 *.pt

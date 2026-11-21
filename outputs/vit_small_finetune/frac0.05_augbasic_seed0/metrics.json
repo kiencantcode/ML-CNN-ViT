@@ -1,0 +1,71 @@
+{
+  "experiment": "vit_small_finetune",
+  "model": "deit_small_patch16_224.fb_in1k",
+  "pretrained": true,
+  "freeze_backbone": false,
+  "train_fraction": 0.05,
+  "augmentation": "basic",
+  "seed": 0,
+  "n_train": 2250,
+  "test_acc": 0.9521,
+  "test_f1": 0.9520426967238995,
+  "test_loss": 0.19982697229385377,
+  "best_val_acc": 0.9546,
+  "best_epoch": 7,
+  "epochs": 8,
+  "epochs_run": 8,
+  "early_stopped": false,
+  "early_stopping_patience": null,
+  "params_total": 21669514,
+  "params_trainable": 21669514,
+  "train_time_s": 83.76412418700056,
+  "first_epoch_time_s": 4.872359400000278,
+  "epoch_time_mean_s": 3.815626006142598,
+  "train_images_per_s": 589.6804341876878,
+  "peak_gpu_mem_gb": 1.366501808166504,
+  "hardware": {
+    "cpu": "x86_64",
+    "os": "Linux 6.6.159+",
+    "python": "3.13.16",
+    "torch": "2.14.1+cu130",
+    "timm": "1.0.31",
+    "cuda": "13.0",
+    "gpu": "NVIDIA L4",
+    "gpu_memory_gb": 22.03
+  },
+  "config": {
+    "seed": 0,
+    "output_dir": "/content/drive/MyDrive/ML-CNN-ViT/outputs",
+    "data": {
+      "name": "cifar10",
+      "root": "/content/data",
+      "image_size": 224,
+      "val_fraction": 0.1,
+      "split_seed": 0,
+      "train_fraction": 0.05,
+      "augmentation": "basic",
+      "num_workers": 4,
+      "eval_num_workers": 2
+    },
+    "model": {
+      "name": "deit_small_patch16_224.fb_in1k",
+      "pretrained": true,
+      "freeze_backbone": false
+    },
+    "train": {
+      "epochs": 8,
+      "batch_size": 32,
+      "optimizer": "adamw",
+      "lr_head": 0.001,
+      "lr_backbone": 0.0001,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "label_smoothing": 0.0,
+      "amp": true,
+      "grad_accum_steps": 1,
+      "grad_clip": 1.0,
+      "save_last": true
+    },
+    "experiment": "vit_small_finetune"
+  }
+}
