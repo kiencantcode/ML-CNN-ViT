@@ -16,10 +16,12 @@ from src.interpret import attention_rollout_for_vit, grad_cam_for_cnn, overlay_h
 from src.models import build_model, get_gradcam_layer, get_model_data_config
 from src.utils import load_config
 
-VIT_EXPERIMENTS = ["vit_small_finetune", "small_vit_scratch"]
+VIT_EXPERIMENTS = ["vit_small_finetune_noclip", "small_vit_scratch_noclip"]
+VIT_CHOICES = VIT_EXPERIMENTS + ["vit_small_finetune", "small_vit_scratch"]
 CNN_EXPERIMENTS = ["resnet50_finetune", "convnext_tiny_finetune", "small_cnn_scratch"]
 LABELS = {
-    "vit_small_finetune": "ViT-S/16 (DeiT)", "small_vit_scratch": "SmallViT",
+    "vit_small_finetune_noclip": "DeiT-S", "vit_small_finetune": "DeiT-S + grad clip",
+    "small_vit_scratch_noclip": "SmallViT", "small_vit_scratch": "SmallViT + grad clip",
     "resnet50_finetune": "ResNet-50", "convnext_tiny_finetune": "ConvNeXt-T",
     "small_cnn_scratch": "SmallCNN",
 }
@@ -27,6 +29,8 @@ LABELS = {
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Attention rollout maps for the trained ViTs")
+    parser.add_argument("--vit-experiments", nargs="+", default=VIT_EXPERIMENTS,
+                        choices=VIT_CHOICES, help="which ViT runs to draw (default: main runs)")
     parser.add_argument("--run", default="frac1.0_augbasic_seed0", help="run folder name to load")
     parser.add_argument("--outputs-dir", default="outputs",
                         help="folder holding <experiment>/<run>/best.pt (relative to ROOT or absolute)")
@@ -81,7 +85,7 @@ def heatmaps_for(entry, raw_images, device, args, batch=16):
 def shared_figures(loaded, indices, test_images, test_labels, device, args, out, prefix, title):
     results = {name: heatmaps_for(entry, test_images[indices], device, args)
                for name, entry in loaded.items()}
-    columns = ["image"] + [LABELS[name] for name in loaded]
+    columns = ["image"] + [LABELS.get(name, name) for name in loaded]
     half = len(indices) // 2
     for part, chunk in [("a", range(0, half)), ("b", range(half, len(indices)))]:
         rows = []
@@ -112,7 +116,7 @@ def error_figures(loaded, test_images, test_labels, device, args, out):
                   f"predicted: {CIFAR10_CLASSES[preds[k]]}", BAD)]
                 for k, idx in enumerate(wrong)]
         draw_grid(rows, ["image", "rollout"], out / f"rollout_errors_{name}.png",
-                  f"{LABELS[name]}: first {len(wrong)} misclassified test images")
+                  f"{LABELS.get(name, name)}: first {len(wrong)} misclassified test images")
 
 
 def main():
@@ -129,7 +133,7 @@ def main():
     test_images, test_labels = test_set.data, np.asarray(test_set.targets)
     indices = shared_image_list(args.image_list, test_labels, args.per_class)
 
-    vits = {name: entry for name in VIT_EXPERIMENTS
+    vits = {name: entry for name in args.vit_experiments
             if (entry := load_run(name, args.run, outputs_dir, device)) is not None}
     if not vits:
         print("no trained ViT checkpoints found")
@@ -144,8 +148,10 @@ def main():
         cnns = {name: entry for name in CNN_EXPERIMENTS
                 if (entry := load_run(name, args.run, outputs_dir, device)) is not None}
         # Pretrained models first, then the from-scratch pair, so columns read CNN vs ViT.
-        order = ["resnet50_finetune", "convnext_tiny_finetune", "vit_small_finetune",
-                 "small_cnn_scratch", "small_vit_scratch"]
+        vit_pre = [n for n in args.vit_experiments if "finetune" in n]
+        vit_scr = [n for n in args.vit_experiments if "scratch" in n]
+        order = ["resnet50_finetune", "convnext_tiny_finetune", *vit_pre,
+                 "small_cnn_scratch", *vit_scr]
         both = {name: (cnns | vits)[name] for name in order if name in (cnns | vits)}
         shared_figures(both, indices, test_images, test_labels, device, args, out,
                        "rq4_gradcam_vs_rollout",
