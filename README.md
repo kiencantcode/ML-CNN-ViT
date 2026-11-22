@@ -5,9 +5,11 @@ ConvNeXt) and Vision Transformers with respect to dataset size, data augmentatio
 
 **Team:** [names, student IDs, team leader]
 
-**This repository covers the CNN part.** ViT part: [teammate's name and repository link]
+**CNN part:** [K] (branch `cnn`). **ViT part:** [Y] (branch `vit`). Both parts use the same data
+pipeline, training loop, splits, seeds and experiment grid.
 
-Status: the CNN part is complete (63 training runs, 3 seeds each, plus Grad-CAM and CIFAR-10-C).
+Status: both parts are complete. CNN: 63 training runs. ViT: 45 main runs with tuned learning rates.
+Every setting uses 3 seeds; both parts include Grad-CAM / attention rollout and CIFAR-10-C.
 
 ## What is compared
 
@@ -16,6 +18,8 @@ Status: the CNN part is complete (63 training runs, 3 seeds each, plus Grad-CAM 
 | ResNet-50 (`resnet50.a1_in1k`) | ImageNet-1k | 224 × 224 | 23.5M | fine-tune 8 epochs |
 | ConvNeXt-Tiny (`convnext_tiny.fb_in1k`) | ImageNet-1k | 224 × 224 | 27.8M | fine-tune 8 epochs |
 | SmallCNN (own design) | random | 32 × 32 | 1.15M | from scratch, 60 epochs |
+| DeiT-S/16 (`deit_small_patch16_224.fb_in1k`) | ImageNet-1k | 224 × 224 | 21.7M | fine-tune 8 epochs |
+| SmallViT (own design, patch 4) | random | 32 × 32 | 1.21M | from scratch, 60 epochs |
 | Logistic regression on pixels | - | 32 × 32 | 0.03M | baseline |
 
 - **Dataset:** CIFAR-10. Fixed stratified split of 45,000 train / 5,000 validation; the 10,000 test
@@ -28,7 +32,7 @@ Status: the CNN part is complete (63 training runs, 3 seeds each, plus Grad-CAM 
 - **Seeds:** 0, 1, 2 for every setting; results are mean ± std.
 
 Shared settings: AdamW (weight decay 0.05), learning rate 1e-3 for the head and 1e-4 for the
-pretrained backbone, 1 warmup epoch then cosine decay, batch size 32, mixed precision.
+pretrained backbone, 1 warmup epoch then cosine decay, batch size 32, mixed precision. The ViT runs use learning rates tuned on the validation set (see [ViT part](#vit-part)).
 
 ## Installation
 
@@ -53,7 +57,7 @@ scripts/   Command-line entry points
 tests/     Data pipeline tests
 results/   Final tables and figures (committed)
 data/      Datasets (downloaded, not committed)
-outputs/   Per-run logs, metrics and checkpoints (not committed)
+outputs/   Per-run configs, histories, metrics and test predictions (committed; checkpoints are not)
 ```
 
 ## Reproducing the results
@@ -151,6 +155,116 @@ Full tables: [`results/summary.md`](results/summary.md) and
 
 Grad-CAM figures are in [`results/figures/gradcam/`](results/figures/gradcam/).
 
+## ViT part
+
+DeiT-S/16 is the ViT counterpart of ResNet-50 and ConvNeXt-Tiny: same ImageNet-1k-only pretraining,
+same input size and the same 8-epoch fine-tuning recipe. SmallViT is the counterpart of SmallCNN:
+same 32 × 32 input, same 60 epochs and almost the same parameter count (1.21M vs 1.15M), so the
+architecture is the main difference.
+
+| Model | Config | Weights | Parameters | Training |
+|---|---|---|---|---|
+| DeiT-S/16, full fine-tune | `vit_small_finetune_tuned.yaml` | ImageNet-1k | 21.7M | 8 epochs |
+| SmallViT (patch 4, dim 128, depth 6, 4 heads) | `small_vit_scratch_tuned.yaml` | random | 1.21M | 60 epochs |
+| ViT-S/16, random init (ablation) | `vit_small_random_tuned.yaml` | random | 21.7M | 8 epochs |
+| DeiT-S/16, frozen backbone (ablation) | `vit_small_frozen.yaml` | ImageNet-1k | head only | 8 epochs |
+
+### Learning rates
+
+The learning rate was chosen on the validation set (seed 0, one run per value). The table is in
+[`results/vit/tuning_summary.csv`](results/vit/tuning_summary.csv).
+
+| Model | Values tried | Chosen | Val acc (shared default → chosen) |
+|---|---|---|---|
+| DeiT-S/16 (backbone LR, 100% data) | 1e-5, 3e-5, 1e-4, 3e-4 | 3e-5 | 97.98 → 98.36 |
+| SmallViT (100% data) | 1e-4, 3e-4, 1e-3, 3e-3 | 3e-4 | 80.64 → 81.78 |
+| ViT-S/16 random init (10% data) | 1e-4, 3e-4, 1e-3 | 3e-4 | 35.14 → 44.94 |
+
+All other settings follow the shared recipe, including no gradient clipping. Runs with the shared default
+learning rates are kept for reference (`*_noclip`, `vit_small_random`; labelled "lr 1e-4" / "lr 1e-3"
+in the summary table), and `vit_small_finetune` / `small_vit_scratch` are a gradient-clipping ablation.
+
+### Reproducing
+
+The ViT runs were trained on Google Colab (NVIDIA L4).
+
+```bash
+# one run (fraction and augmentation can be overridden like the CNN runs)
+python scripts/train.py --config configs/vit_small_finetune_tuned.yaml --set seed=0 data.train_fraction=0.1
+python scripts/train.py --config configs/small_vit_scratch_tuned.yaml --set seed=0 data.train_fraction=0.1 data.augmentation=strong
+
+# robustness, attention rollout, tables and figures
+python scripts/eval_cifar10c.py --experiments vit_small_finetune_tuned small_vit_scratch_tuned \
+    --runs frac1.0_augbasic_seed0 frac1.0_augbasic_seed1 frac1.0_augbasic_seed2 --out results/vit/cifar10c
+python scripts/visualize_attention.py --compare-cnn --out results/vit/figures/attention
+python scripts/summarize_results.py --results results/vit
+```
+
+### Results
+
+Test accuracy (%), mean ± std over 3 seeds. Full table: [`results/vit/summary.md`](results/vit/summary.md).
+
+**Learning curves (basic augmentation)**
+
+| Model | 1% (450 images) | 10% (4,500) | 100% (45,000) |
+|---|---|---|---|
+| DeiT-S/16 (pretrained) | **92.61 ± 0.33** | 96.29 ± 0.19 | 98.08 ± 0.11 |
+| SmallViT (scratch) | 33.21 ± 0.62 | 56.40 ± 0.11 | 81.84 ± 0.13 |
+
+![ViT learning curve](results/vit/figures/learning_curve_basic.png)
+
+**Augmentation (10% data)**
+
+| Model | None | Basic | Strong |
+|---|---|---|---|
+| DeiT-S/16 | 96.14 ± 0.13 | 96.29 ± 0.19 | 96.38 ± 0.26 |
+| SmallViT | 47.82 ± 0.21 | 56.40 ± 0.11 | **58.68 ± 0.67** |
+
+**Ablation**
+
+| Variant | 10% data | 100% data |
+|---|---|---|
+| DeiT-S/16, full fine-tune | 96.29 ± 0.19 | 98.08 ± 0.11 |
+| DeiT-S/16, frozen backbone | 92.60 ± 0.24 | 93.87 ± 0.06 |
+| ViT-S/16, random init | 44.97 ± 0.46 | 65.38 ± 0.54 |
+
+**Compute cost** (all models measured on the same NVIDIA L4, from
+[`results/compute_cost.md`](results/compute_cost.md))
+
+| Model | Params (M) | GFLOPs | Inference (img/s) | Train (img/s) | Peak train GPU (GB) |
+|---|---|---|---|---|---|
+| DeiT-S/16 | 21.67 | 9.20 | 1,768 | 636 | 1.37 |
+| ConvNeXt-Tiny | 27.83 | 8.91 | 980 | 371 | 2.26 |
+| ResNet-50 | 23.53 | 8.17 | 1,222 | 428 | 1.68 |
+| SmallViT | 1.21 | 0.17 | 55,771 | 1,912 | 0.10 |
+| SmallCNN | 1.15 | 0.31 | 69,809 | 5,641 | 0.11 |
+
+**Robustness on CIFAR-10-C** (100% data, same 2,000-image subset as the CNN part)
+
+| Model | Clean | Corrupted mean | Relative drop | Noise | Blur | Weather | Digital |
+|---|---|---|---|---|---|---|---|
+| DeiT-S/16 | 98.23 ± 0.13 | **90.25 ± 0.49** | **8.1%** | 83.1 | 89.1 | 95.4 | 91.9 |
+| SmallViT | 81.62 ± 0.36 | 67.00 ± 0.62 | 17.9% | 60.2 | 67.5 | 70.6 | 68.4 |
+
+![ViT CIFAR-10-C severity](results/vit/figures/cifar10c_severity.png)
+
+### Main findings (ViT vs CNN)
+
+- With pretraining, DeiT-S/16 is close to ConvNeXt-Tiny at every data size (92.61 vs 92.14 at 1%,
+  98.08 vs 98.13 at 100%) and far above ResNet-50 with 450 images (92.61 vs 73.62).
+- Without pretraining the ViT falls behind. SmallViT is 10 to 22 points below SmallCNN at every data
+  size, and random-init ViT-S/16 reaches 65.38% at 100% data, against 85.44% for random-init ResNet-50.
+- Augmentation matters more for the ViT trained from scratch: +10.9 points from none to strong for
+  SmallViT (SmallCNN: +8.0), against +0.2 for DeiT-S.
+- DeiT-S/16 loses the least accuracy under corruptions (8.1% relative drop, against 10.5% for
+  ConvNeXt-Tiny and 20.9% for ResNet-50), and its largest margin is on noise.
+- DeiT-S/16 has the highest inference throughput of the three 224 × 224 models on the L4.
+- Limitation: the CNN numbers above use the shared default learning rates, while the ViT numbers use
+  tuned learning rates.
+
+Attention rollout figures, including a side-by-side comparison with Grad-CAM on the same images, are in
+[`results/vit/figures/attention/`](results/vit/figures/attention/).
+
 ## Credits
 
 | Source | Used for | Our changes |
@@ -159,9 +273,11 @@ Grad-CAM figures are in [`results/figures/gradcam/`](results/figures/gradcam/).
 | [torchvision](https://github.com/pytorch/vision) | CIFAR-10 download, image transforms, RandAugment | Own split, subsampling and transform pipeline |
 | [scikit-learn](https://scikit-learn.org) | Logistic regression baseline, stratified split | - |
 | [CIFAR-10-C](https://zenodo.org/records/2535967) | Corrupted test images | Own loader and fixed 2,000-image subset |
+| [timm](https://github.com/huggingface/pytorch-image-models) | DeiT-S/16 architecture and ImageNet-1k weights | New 10-class head, two learning-rate groups, frozen-backbone option |
+| Abnar and Zuidema (2020) | Attention rollout method | Own implementation for timm ViTs and SmallViT |
 
-Written by the team: the data pipeline, SmallCNN, the training loop, the experiment runner, the
-Grad-CAM implementation (`src/interpret.py`), the CIFAR-10-C evaluation and all tables and plots.
+Written by the team: the data pipeline, SmallCNN, SmallViT, the training loop, the experiment runner, the
+Grad-CAM and attention rollout implementations (`src/interpret.py`), the CIFAR-10-C evaluation and all tables and plots.
 
 ## References
 
@@ -172,3 +288,5 @@ Grad-CAM implementation (`src/interpret.py`), the CIFAR-10-C evaluation and all 
 5. Selvaraju et al., [Grad-CAM: Visual Explanations from Deep Networks](https://arxiv.org/abs/1610.02391), 2017.
 6. Hendrycks and Dietterich, [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1903.12261), 2019.
 7. Cubuk et al., [RandAugment](https://arxiv.org/abs/1909.13719), 2020.
+8. Touvron et al., [Training data-efficient image transformers & distillation through attention](https://arxiv.org/abs/2012.12877), 2021.
+9. Abnar and Zuidema, [Quantifying Attention Flow in Transformers](https://arxiv.org/abs/2005.00928), 2020.
