@@ -1,0 +1,7 @@
+inherit: small_vit_scratch_noclip.yaml
+experiment: small_vit_scratch_tuned
+# Main SmallViT run. LR picked on the validation set (seed 0, 100% data):
+# 3e-4 -> 81.78% val (1e-3 -> 80.64%). Head and backbone share one LR (trained from scratch).
+train:
+  lr_head: 3.0e-4
+  lr_backbone: 3.0e-4

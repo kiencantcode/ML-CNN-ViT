@@ -1,0 +1,7 @@
+inherit: vit_small_random.yaml
+experiment: vit_small_random_tuned
+# Random-init ViT-S (ablation). LR picked on the validation set (seed 0, 10% data):
+# 3e-4 -> 44.94% val (1e-3 -> 35.14%). The tuning runs set head and backbone to the same LR.
+train:
+  lr_head: 3.0e-4
+  lr_backbone: 3.0e-4

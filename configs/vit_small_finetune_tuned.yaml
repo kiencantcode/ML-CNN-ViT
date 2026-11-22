@@ -1,0 +1,6 @@
+inherit: vit_small_finetune_noclip.yaml
+experiment: vit_small_finetune_tuned
+# Main DeiT-S run. Same recipe as vit_small_finetune_noclip, with the backbone LR
+# picked on the validation set (seed 0, 100% data): 3e-5 -> 98.36% val (1e-4 -> 97.98%).
+train:
+  lr_backbone: 3.0e-5
