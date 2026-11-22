@@ -24,19 +24,24 @@ MODELS = {
     "resnet50_finetune": ("ResNet-50 (pretrained)", "#2a78d6", "o"),
     "convnext_tiny_finetune": ("ConvNeXt-Tiny (pretrained)", "#eb6834", "s"),
     "small_cnn_scratch": ("SmallCNN (scratch)", "#1baf7a", "^"),
-    "vit_small_finetune_noclip": ("DeiT-S (pretrained)", "#eda100", "D"),
-    "small_vit_scratch_noclip": ("SmallViT (scratch)", "#e87ba4", "v"),
+    "vit_small_finetune_tuned": ("DeiT-S (pretrained)", "#eda100", "D"),
+    "small_vit_scratch_tuned": ("SmallViT (scratch)", "#e87ba4", "v"),
+    "vit_small_finetune_noclip": ("DeiT-S (pretrained, lr 1e-4)", "#c9a34a", "D"),
+    "small_vit_scratch_noclip": ("SmallViT (scratch, lr 1e-3)", "#c98aa6", "v"),
     "vit_small_finetune": ("DeiT-S + grad clip (ablation)", "#9c6b00", "D"),
     "small_vit_scratch": ("SmallViT + grad clip (ablation)", "#a8436f", "v"),
     "resnet50_frozen": ("ResNet-50 (frozen backbone)", "#008300", "o"),
     "convnext_tiny_frozen": ("ConvNeXt-Tiny (frozen backbone)", "#6250d6", "s"),
     "resnet50_random": ("ResNet-50 (random init)", "#e34948", "o"),
     "vit_small_frozen": ("DeiT-S (frozen backbone)", "#b07d00", "D"),
-    "vit_small_random": ("ViT-S/16 (random init)", "#c2410c", "D"),
+    "vit_small_random_tuned": ("ViT-S/16 (random init)", "#c2410c", "D"),
+    "vit_small_random": ("ViT-S/16 (random init, lr 1e-3)", "#f0925e", "D"),
 }
 EXTRA_COLORS = ["#008300", "#6250d6", "#e34948"]
 # ablation-only runs: kept out of the learning-curve and augmentation plots
-ABLATION_ONLY = {"resnet50_random", "vit_small_random", "vit_small_finetune", "small_vit_scratch"}
+ABLATION_ONLY = {"resnet50_random", "vit_small_random", "vit_small_random_tuned",
+                 "vit_small_finetune", "small_vit_scratch",
+                 "vit_small_finetune_noclip", "small_vit_scratch_noclip"}
 AUG_ORDER = ["none", "basic", "strong"]
 
 

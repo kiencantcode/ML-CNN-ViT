@@ -28,6 +28,9 @@ outputs/*
 !outputs/small_vit_scratch_noclip/
 !outputs/vit_small_frozen/
 !outputs/vit_small_random/
+!outputs/vit_small_finetune_tuned/
+!outputs/small_vit_scratch_tuned/
+!outputs/vit_small_random_tuned/
 outputs/logs/queue_*.txt
 outputs/logs/remaining_runs.txt
 *.pt

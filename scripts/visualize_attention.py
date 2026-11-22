@@ -16,12 +16,14 @@ from src.interpret import attention_rollout_for_vit, grad_cam_for_cnn, overlay_h
 from src.models import build_model, get_gradcam_layer, get_model_data_config
 from src.utils import load_config
 
-VIT_EXPERIMENTS = ["vit_small_finetune_noclip", "small_vit_scratch_noclip"]
-VIT_CHOICES = VIT_EXPERIMENTS + ["vit_small_finetune", "small_vit_scratch"]
+VIT_EXPERIMENTS = ["vit_small_finetune_tuned", "small_vit_scratch_tuned"]
+VIT_CHOICES = VIT_EXPERIMENTS + ["vit_small_finetune_noclip", "small_vit_scratch_noclip",
+                                 "vit_small_finetune", "small_vit_scratch"]
 CNN_EXPERIMENTS = ["resnet50_finetune", "convnext_tiny_finetune", "small_cnn_scratch"]
 LABELS = {
-    "vit_small_finetune_noclip": "DeiT-S", "vit_small_finetune": "DeiT-S + grad clip",
-    "small_vit_scratch_noclip": "SmallViT", "small_vit_scratch": "SmallViT + grad clip",
+    "vit_small_finetune_tuned": "DeiT-S", "small_vit_scratch_tuned": "SmallViT",
+    "vit_small_finetune_noclip": "DeiT-S (lr 1e-4)", "small_vit_scratch_noclip": "SmallViT (lr 1e-3)",
+    "vit_small_finetune": "DeiT-S + grad clip", "small_vit_scratch": "SmallViT + grad clip",
     "resnet50_finetune": "ResNet-50", "convnext_tiny_finetune": "ConvNeXt-T",
     "small_cnn_scratch": "SmallCNN",
 }
