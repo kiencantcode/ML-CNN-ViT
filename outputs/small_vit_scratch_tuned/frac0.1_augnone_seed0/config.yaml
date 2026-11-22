@@ -1,0 +1,37 @@
+seed: 0
+output_dir: outputs
+data:
+  name: cifar10
+  root: data
+  image_size: 32
+  val_fraction: 0.1
+  split_seed: 0
+  train_fraction: 0.1
+  augmentation: none
+  num_workers: 4
+  eval_num_workers: 2
+model:
+  name: small_vit
+  pretrained: false
+  freeze_backbone: false
+  patch_size: 4
+  embed_dim: 128
+  depth: 6
+  num_heads: 4
+  mlp_ratio: 4.0
+  dropout: 0.1
+train:
+  epochs: 60
+  batch_size: 32
+  optimizer: adamw
+  lr_head: 0.0003
+  lr_backbone: 0.0003
+  weight_decay: 0.05
+  warmup_epochs: 1
+  label_smoothing: 0.0
+  amp: true
+  grad_accum_steps: 1
+  grad_clip: null
+  save_last: true
+experiment: small_vit_scratch_tuned
+progress_bar: false

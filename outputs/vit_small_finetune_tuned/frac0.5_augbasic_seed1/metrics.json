@@ -1,0 +1,72 @@
+{
+  "experiment": "vit_small_finetune_tuned",
+  "model": "deit_small_patch16_224.fb_in1k",
+  "pretrained": true,
+  "freeze_backbone": false,
+  "train_fraction": 0.5,
+  "augmentation": "basic",
+  "seed": 1,
+  "n_train": 22500,
+  "test_acc": 0.9779,
+  "test_f1": 0.9778984731081023,
+  "test_loss": 0.08895320328474045,
+  "best_val_acc": 0.979,
+  "best_epoch": 8,
+  "epochs": 8,
+  "epochs_run": 8,
+  "early_stopped": false,
+  "early_stopping_patience": null,
+  "params_total": 21669514,
+  "params_trainable": 21669514,
+  "train_time_s": 337.1350011600007,
+  "first_epoch_time_s": 37.7711690469996,
+  "epoch_time_mean_s": 36.41379152057133,
+  "train_images_per_s": 617.8977541322228,
+  "peak_gpu_mem_gb": 1.366501808166504,
+  "hardware": {
+    "cpu": "x86_64",
+    "os": "Linux 6.6.159+",
+    "python": "3.13.16",
+    "torch": "2.14.1+cu130",
+    "timm": "1.0.31",
+    "cuda": "13.0",
+    "gpu": "NVIDIA L4",
+    "gpu_memory_gb": 22.03
+  },
+  "config": {
+    "seed": 1,
+    "output_dir": "outputs",
+    "data": {
+      "name": "cifar10",
+      "root": "data",
+      "image_size": 224,
+      "val_fraction": 0.1,
+      "split_seed": 0,
+      "train_fraction": 0.5,
+      "augmentation": "basic",
+      "num_workers": 4,
+      "eval_num_workers": 2
+    },
+    "model": {
+      "name": "deit_small_patch16_224.fb_in1k",
+      "pretrained": true,
+      "freeze_backbone": false
+    },
+    "train": {
+      "epochs": 8,
+      "batch_size": 32,
+      "optimizer": "adamw",
+      "lr_head": 0.001,
+      "lr_backbone": 3e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "label_smoothing": 0.0,
+      "amp": true,
+      "grad_accum_steps": 1,
+      "grad_clip": null,
+      "save_last": true
+    },
+    "experiment": "vit_small_finetune_tuned",
+    "progress_bar": false
+  }
+}
