@@ -80,6 +80,10 @@ python scripts/run_experiments.py --dry-run          # list the runs without tra
 python scripts/eval_cifar10c.py --runs frac1.0_augbasic_seed0 frac1.0_augbasic_seed1 frac1.0_augbasic_seed2
 python scripts/visualize.py
 python scripts/summarize_results.py
+
+# RQ3 accuracy vs cost and per-class accuracy (CNN + ViT)
+python scripts/accuracy_vs_cost.py
+python scripts/per_class_accuracy.py
 ```
 
 On Windows, `scripts/run_all.ps1` runs all of the last five commands in order.
@@ -132,6 +136,13 @@ Full tables: [`results/summary.md`](results/summary.md) and
 | ResNet-50, frozen | 15.6 | 463 | 0.43 |
 | SmallCNN (60 epochs) | 16.7 | 2,999 | 0.08 |
 
+Accuracy against cost for the five main models (table:
+[`results/rq3_accuracy_cost.md`](results/rq3_accuracy_cost.md)). The 32 × 32 models are about 30 times
+cheaper per image than the 224 × 224 models; at 224 × 224, DeiT-S/16 matches ConvNeXt-Tiny in accuracy
+(98.08 vs 98.13) with 1.8 times its inference throughput.
+
+![Accuracy vs compute cost](results/figures/rq3_accuracy_vs_cost.png)
+
 ### Robustness on CIFAR-10-C (models trained on 100% data)
 
 | Model | Clean | Corrupted mean | Relative drop | Noise | Blur | Weather | Digital |
@@ -157,10 +168,7 @@ Grad-CAM figures are in [`results/figures/gradcam/`](results/figures/gradcam/).
 
 ## ViT part
 
-DeiT-S/16 is the ViT counterpart of ResNet-50 and ConvNeXt-Tiny: same ImageNet-1k-only pretraining,
-same input size and the same 8-epoch fine-tuning recipe. SmallViT is the counterpart of SmallCNN:
-same 32 × 32 input, same 60 epochs and almost the same parameter count (1.21M vs 1.15M), so the
-architecture is the main difference.
+DeiT-S/16 is the ViT counterpart of ResNet-50 and ConvNeXt-Tiny: same ImageNet-1k-only pretraining, same input size and the same 8-epoch fine-tuning recipe. SmallViT is the counterpart of SmallCNN: same 32 × 32 input, same 60 epochs and almost the same parameter count (1.21M vs 1.15M), so the architecture is the main difference.
 
 | Model | Config | Weights | Parameters | Training |
 |---|---|---|---|---|
@@ -180,9 +188,7 @@ The learning rate was chosen on the validation set (seed 0, one run per value). 
 | SmallViT (100% data) | 1e-4, 3e-4, 1e-3, 3e-3 | 3e-4 | 80.64 → 81.78 |
 | ViT-S/16 random init (10% data) | 1e-4, 3e-4, 1e-3 | 3e-4 | 35.14 → 44.94 |
 
-All other settings follow the shared recipe, including no gradient clipping. Runs with the shared default
-learning rates are kept for reference (`*_noclip`, `vit_small_random`; labelled "lr 1e-4" / "lr 1e-3"
-in the summary table), and `vit_small_finetune` / `small_vit_scratch` are a gradient-clipping ablation.
+All other settings follow the shared recipe, including no gradient clipping. Runs with the shared default learning rates are kept for reference (`*_noclip`, `vit_small_random`; labelled "lr 1e-4" / "lr 1e-3" in the summary table), and `vit_small_finetune` / `small_vit_scratch` are a gradient-clipping ablation.
 
 ### Reproducing
 
@@ -248,19 +254,38 @@ Test accuracy (%), mean ± std over 3 seeds. Full table: [`results/vit/summary.m
 
 ![ViT CIFAR-10-C severity](results/vit/figures/cifar10c_severity.png)
 
+
+**Per-class accuracy** (100% data, mean over 3 seeds; 1,000 test images per class, so one image is
+0.1 points). Full table with std and the five most confused pairs per model:
+[`results/per_class_accuracy.md`](results/per_class_accuracy.md).
+
+| Class | SmallCNN | ResNet-50 | ConvNeXt-T | SmallViT | DeiT-S |
+|---|---|---|---|---|---|
+| airplane | 93.1 | 97.3 | 99.1 | 82.7 | 98.5 |
+| automobile | 96.4 | 98.5 | 99.0 | 91.0 | 99.1 |
+| bird | 88.3 | 97.3 | 98.1 | 75.3 | 97.8 |
+| **cat** | **82.3** | **93.2** | **95.5** | **64.9** | **95.7** |
+| deer | 92.0 | 96.4 | 97.9 | 77.8 | 97.7 |
+| dog | 87.5 | 96.2 | 96.5 | 76.9 | 97.2 |
+| frog | 94.6 | 98.5 | 99.3 | 88.3 | 99.3 |
+| horse | 94.2 | 97.4 | 98.6 | 84.0 | 98.2 |
+| ship | 95.9 | 98.5 | 99.2 | 88.8 | 99.3 |
+| truck | 94.0 | 97.4 | 98.0 | 88.6 | 97.9 |
+
+The most confused pair is cat ↔ dog for every model. Errors per seed in both directions: SmallViT 283.7, SmallCNN 146.3, ResNet-50 71.3, ConvNeXt-Tiny 61.3, DeiT-S/16 49.3.
+The second pair is automobile ↔ truck for every model except SmallViT, where bird ↔ deer and automobile ↔ truck tie (105.7 each).
+
+![Per-class accuracy](results/figures/per_class_accuracy.png)
+
 ### Main findings (ViT vs CNN)
 
-- With pretraining, DeiT-S/16 is close to ConvNeXt-Tiny at every data size (92.61 vs 92.14 at 1%,
-  98.08 vs 98.13 at 100%) and far above ResNet-50 with 450 images (92.61 vs 73.62).
-- Without pretraining the ViT falls behind. SmallViT is 10 to 22 points below SmallCNN at every data
-  size, and random-init ViT-S/16 reaches 65.38% at 100% data, against 85.44% for random-init ResNet-50.
-- Augmentation matters more for the ViT trained from scratch: +10.9 points from none to strong for
-  SmallViT (SmallCNN: +8.0), against +0.2 for DeiT-S.
-- DeiT-S/16 loses the least accuracy under corruptions (8.1% relative drop, against 10.5% for
-  ConvNeXt-Tiny and 20.9% for ResNet-50), and its largest margin is on noise.
-- DeiT-S/16 has the highest inference throughput of the three 224 × 224 models on the L4.
-- Limitation: the CNN numbers above use the shared default learning rates, while the ViT numbers use
-  tuned learning rates.
+- With pretraining, DeiT-S/16 is close to ConvNeXt-Tiny at every data size (92.61 vs 92.14 at 1%, 98.08 vs 98.13 at 100%) and far above ResNet-50 with 450 images (92.61 vs 73.62).
+- Without pretraining the ViT falls behind. SmallViT is 10 to 22 points below SmallCNN at every data size, and random-init ViT-S/16 reaches 65.38% at 100% data, against 85.44% for random-init ResNet-50.
+- Augmentation matters more for the ViT trained from scratch: +10.9 points from none to strong for SmallViT (SmallCNN: +8.0), against +0.2 for DeiT-S.
+- DeiT-S/16 loses the least accuracy under corruptions (8.1% relative drop, against 10.5% for ConvNeXt-Tiny and 20.9% for ResNet-50), and its largest margin is on noise.
+- DeiT-S/16 has the highest inference throughput of the three 224 × 224 models on the L4 (1,768 img/s against 1,222 for ResNet-50 and 980 for ConvNeXt-Tiny), at almost the same GFLOPs.
+- All five models find the same classes hardest: cat is the weakest class and cat ↔ dog the most confused pair. SmallViT is below SmallCNN on all ten classes, most on cat (−17.4) and deer (−14.2).
+- Limitation: the CNN numbers above use the shared default learning rates, while the ViT numbers use tuned learning rates.
 
 Attention rollout figures, including a side-by-side comparison with Grad-CAM on the same images, are in
 [`results/vit/figures/attention/`](results/vit/figures/attention/).
