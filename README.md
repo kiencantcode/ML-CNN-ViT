@@ -7,7 +7,8 @@ ConvNeXt) and Vision Transformers with respect to dataset size, data augmentatio
 
 **This repository covers the CNN part.** ViT part: [teammate's name and repository link]
 
-Status: the CNN part is complete (63 training runs, 3 seeds each, plus Grad-CAM and CIFAR-10-C).
+Status: the runs with the default settings are finished (63 runs, 3 seeds each, plus Grad-CAM and
+CIFAR-10-C). The hyperparameter search is finished and the runs with the selected settings are in progress.
 
 ## What is compared
 
@@ -27,8 +28,31 @@ Status: the CNN part is complete (63 training runs, 3 seeds each, plus Grad-CAM 
 - **Robustness (extension):** CIFAR-10-C, 19 corruptions × 5 severities on a fixed 2,000-image subset.
 - **Seeds:** 0, 1, 2 for every setting; results are mean ± std.
 
-Shared settings: AdamW (weight decay 0.05), learning rate 1e-3 for the head and 1e-4 for the
-pretrained backbone, 1 warmup epoch then cosine decay, batch size 32, mixed precision.
+Default settings: AdamW (weight decay 0.05), learning rate 1e-3 for the head and 1e-4 for the
+pretrained backbone, 1 warmup epoch then cosine decay, batch size 32, mixed precision. Models trained from scratch use 1e-3
+for all layers.
+
+## Hyperparameter search
+
+Every model variant gets the same budget of 6 trials: learning rate × {0.3, 1, 3} (both learning rates of
+the model are scaled) and weight decay {0.05, 0.005}. Each trial uses 10% of the training data, basic
+augmentation, seed 0 and the usual number of epochs. The trial with the highest validation accuracy is
+selected; the search does not use the test set. The logistic regression baseline has 4 values of C.
+
+| Model | Default val acc (%) | Best val acc (%) | Selected LR | Selected weight decay |
+|---|---|---|---|---|
+| SmallCNN | 77.98 | 78.10 | ×3 | 0.005 |
+| ResNet-50 | 92.92 | 93.84 | ×3 | 0.005 |
+| ConvNeXt-Tiny | 96.92 | 97.02 | ×1 | 0.005 |
+| ResNet-50, frozen | 87.96 | 89.58 | ×3 | 0.005 |
+| ConvNeXt-Tiny, frozen | 92.60 | 93.10 | ×3 | 0.05 |
+| ResNet-50, random init | 57.34 | 57.44 | ×1 | 0.005 |
+
+The 5,000 validation images give a standard error of about 0.2 to 0.7 points, so differences smaller than
+that (SmallCNN, ConvNeXt-Tiny, ResNet-50 random init) are within noise. For four models the best learning
+rate is the largest one tried. All trials: [`results/tuning.md`](results/tuning.md).
+The test results of the default settings were already known before this search; the search space and the
+selection rule were fixed before running it.
 
 ## Installation
 
@@ -53,7 +77,7 @@ scripts/   Command-line entry points
 tests/     Data pipeline tests
 results/   Final tables and figures (committed)
 data/      Datasets (downloaded, not committed)
-outputs/   Per-run logs, metrics and checkpoints (not committed)
+outputs/   Per-run logs, metrics and predictions (checkpoints are not committed)
 ```
 
 ## Reproducing the results
@@ -72,19 +96,24 @@ python scripts/baseline_logreg.py
 python scripts/run_experiments.py
 python scripts/run_experiments.py --dry-run          # list the runs without training
 
+# hyperparameter search, then the same grid with the selected settings (saved in outputs/tuned)
+python scripts/tune.py
+python scripts/run_experiments.py --tuned
+
 # robustness, Grad-CAM, tables and figures
 python scripts/eval_cifar10c.py --runs frac1.0_augbasic_seed0 frac1.0_augbasic_seed1 frac1.0_augbasic_seed2
 python scripts/visualize.py
 python scripts/summarize_results.py
 ```
 
-On Windows, `scripts/run_all.ps1` runs all of the last five commands in order.
+On Windows, `scripts/run_all.ps1` runs the full grid, CIFAR-10-C, Grad-CAM and the summary in order.
+`scripts/run_tuned.ps1` does the same with the selected settings.
 Each run writes `outputs/<experiment>/frac<f>_aug<a>_seed<s>/` with `config.yaml`, `history.csv`,
 `metrics.json` and the test predictions.
 
 ## Results
 
-All numbers are test accuracy (%), mean ± std over 3 seeds.
+All numbers are test accuracy (%), mean ± std over 3 seeds, with the default settings.
 Hardware: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4 GB), PyTorch 2.11, timm 1.0.31.
 Full tables: [`results/summary.md`](results/summary.md) and
 [`results/cifar10c_summary.md`](results/cifar10c_summary.md).
@@ -135,6 +164,9 @@ Full tables: [`results/summary.md`](results/summary.md) and
 | ConvNeXt-Tiny | 97.95 ± 0.20 | **87.66 ± 0.79** | **10.5%** | 76.3 | 87.8 | 94.8 | 89.5 |
 | ResNet-50 | 97.12 ± 0.20 | 76.85 ± 0.70 | 20.9% | 50.5 | 78.1 | 91.5 | 82.1 |
 | SmallCNN | 91.83 ± 0.75 | 70.55 ± 0.82 | 23.2% | 53.2 | 67.8 | 80.2 | 77.5 |
+
+The corrupted mean uses all 19 corruptions. With only the 15 standard ones it is 86.73 ± 0.82
+(ConvNeXt-Tiny), 75.34 ± 0.73 (ResNet-50) and 69.73 ± 0.89 (SmallCNN).
 
 ![CIFAR-10-C severity](results/figures/cifar10c_severity.png)
 

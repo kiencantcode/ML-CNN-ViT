@@ -1,4 +1,5 @@
 import argparse
+import json
 import subprocess
 import sys
 import time
@@ -72,9 +73,17 @@ def parse_args():
                         choices=list(STUDIES))
     parser.add_argument("--only", nargs="*", default=[],
                         help="keep only jobs whose config path contains one of these words")
+    parser.add_argument("--tuned", action="store_true",
+                        help="use the settings selected in results/tuning.json, write to outputs/tuned")
     parser.add_argument("--dry-run", action="store_true", help="list the jobs without running them")
     parser.add_argument("--log", default="outputs/logs/run_experiments.log")
     return parser.parse_args()
+
+
+def tuned_overrides(config):
+    selected = json.loads((ROOT / "results" / "tuning.json").read_text())["models"][Path(config).stem]["selected"]
+    return {"output_dir": "outputs/tuned", "train.lr_head": selected["lr_head"],
+            "train.lr_backbone": selected["lr_backbone"], "train.weight_decay": selected["weight_decay"]}
 
 
 def run_dir_for(config, overrides):
@@ -99,6 +108,8 @@ def main():
     jobs = []
     for study in args.study:
         jobs += [(study, c, o) for c, o in STUDIES[study]()]
+    if args.tuned:
+        jobs = [(s, c, {**o, **tuned_overrides(c)}) for s, c, o in jobs]
     if args.only:
         jobs = [j for j in jobs if any(word in j[1] for word in args.only)]
 

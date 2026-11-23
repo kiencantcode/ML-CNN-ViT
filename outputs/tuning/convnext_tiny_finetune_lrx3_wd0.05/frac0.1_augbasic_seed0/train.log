@@ -1,0 +1,12 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+run: outputs\tuning\convnext_tiny_finetune_lrx3_wd0.05\frac0.1_augbasic_seed0
+model convnext_tiny.fb_in1k | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 0.8496 acc 0.7783  val loss 0.3777 acc 0.8750  91s  *best
+epoch   2/8  train loss 0.2024 acc 0.9310  val loss 0.2229 acc 0.9312  28s  *best
+epoch   3/8  train loss 0.0946 acc 0.9721  val loss 0.1728 acc 0.9442  29s  *best
+epoch   4/8  train loss 0.0214 acc 0.9938  val loss 0.1412 acc 0.9576  29s  *best
+epoch   5/8  train loss 0.0075 acc 0.9982  val loss 0.1261 acc 0.9640  29s  *best
+epoch   6/8  train loss 0.0025 acc 0.9998  val loss 0.1207 acc 0.9634  29s
+epoch   7/8  train loss 0.0011 acc 1.0000  val loss 0.1230 acc 0.9636  29s
+epoch   8/8  train loss 0.0017 acc 0.9998  val loss 0.1231 acc 0.9638  30s
+val acc 0.9640  (best epoch 5, 6.8 min, peak GPU 2.26 GB)

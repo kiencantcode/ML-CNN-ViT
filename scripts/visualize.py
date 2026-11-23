@@ -28,6 +28,7 @@ INK, OK, BAD = "#1f2933", "#0ca30c", "#d03b3b"
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Grad-CAM maps for the trained CNNs")
+    parser.add_argument("--outputs", default="outputs", help="folder that holds the runs")
     parser.add_argument("--run", default="frac1.0_augbasic_seed0", help="run folder name to load")
     parser.add_argument("--image-list", default="results/gradcam_images.json")
     parser.add_argument("--per-class", type=int, default=2)
@@ -56,8 +57,8 @@ def shared_image_list(path, test_labels, per_class):
     return indices
 
 
-def load_trained(experiment, run, device):
-    run_dir = ROOT / "outputs" / experiment / run
+def load_trained(outputs, experiment, run, device):
+    run_dir = ROOT / outputs / experiment / run
     checkpoint = run_dir / "best.pt"
     if not checkpoint.exists():
         return None
@@ -123,7 +124,7 @@ def main():
 
     loaded = {}
     for experiment in EXPERIMENTS:
-        result = load_trained(experiment, args.run, device)
+        result = load_trained(args.outputs, experiment, args.run, device)
         if result is None:
             print(f"skip {experiment}: no checkpoint for {args.run}")
             continue

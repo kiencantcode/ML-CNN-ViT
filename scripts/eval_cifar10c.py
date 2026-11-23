@@ -55,6 +55,7 @@ class CorruptedImages(Dataset):
 def parse_args():
     parser = argparse.ArgumentParser(description="Evaluate trained models on CIFAR-10-C")
     parser.add_argument("--data", default="data/CIFAR-10-C")
+    parser.add_argument("--outputs", default="outputs", help="folder that holds the runs")
     parser.add_argument("--experiments", nargs="+",
                         default=["resnet50_finetune", "convnext_tiny_finetune", "small_cnn_scratch"])
     parser.add_argument("--runs", nargs="+", default=["frac1.0_augbasic_seed0"])
@@ -111,7 +112,7 @@ def main():
 
     for experiment in args.experiments:
         for run in args.runs:
-            run_dir = ROOT / "outputs" / experiment / run
+            run_dir = ROOT / args.outputs / experiment / run
             out_file = out_dir / f"{experiment}_{run}.json"
             if not (run_dir / "best.pt").exists():
                 print(f"skip {experiment}/{run}: no checkpoint")

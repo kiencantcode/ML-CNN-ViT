@@ -175,10 +175,15 @@ def fit(model, loaders, cfg, run_dir, device):
 
     release_workers(train_loader)
     release_workers(val_loader)
-    model.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
-    test_stats = evaluate(model, test_loader, criterion, device, amp, return_predictions=True)
-    np.savez_compressed(run_dir / "test_predictions.npz",
-                        preds=test_stats.pop("preds"), targets=test_stats.pop("targets"))
+    # tuning runs are scored on validation only and never see the test set
+    skip_test = train_cfg.get("skip_test", False)
+    if skip_test:
+        test_stats = {"acc": None, "f1": None, "loss": None}
+    else:
+        model.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
+        test_stats = evaluate(model, test_loader, criterion, device, amp, return_predictions=True)
+        np.savez_compressed(run_dir / "test_predictions.npz",
+                            preds=test_stats.pop("preds"), targets=test_stats.pop("targets"))
 
     total_params, trainable_params = count_parameters(model)
     n_train = len(train_loader.dataset)
@@ -214,6 +219,8 @@ def fit(model, loaders, cfg, run_dir, device):
     if not train_cfg.get("keep_checkpoint", True):
         checkpoint_path.unlink(missing_ok=True)
 
-    print(f"test acc {test_stats['acc']:.4f}  macro-F1 {test_stats['f1']:.4f}  "
+    score = (f"val acc {best_val_acc:.4f}" if skip_test
+             else f"test acc {test_stats['acc']:.4f}  macro-F1 {test_stats['f1']:.4f}")
+    print(f"{score}  "
           f"(best epoch {best_epoch}, {train_time / 60:.1f} min, peak GPU {peak_mem:.2f} GB)")
     return metrics

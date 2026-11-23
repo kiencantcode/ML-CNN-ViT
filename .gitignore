@@ -16,6 +16,7 @@ outputs/*
 !outputs/.gitkeep
 !outputs/baseline/
 !outputs/logs/
+!outputs/tuning/
 !outputs/small_cnn_scratch/
 !outputs/resnet50_finetune/
 !outputs/resnet50_frozen/

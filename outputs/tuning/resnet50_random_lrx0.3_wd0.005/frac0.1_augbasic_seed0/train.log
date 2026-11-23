@@ -1,0 +1,11 @@
+run: outputs\tuning\resnet50_random_lrx0.3_wd0.005\frac0.1_augbasic_seed0
+model resnet50.a1_in1k | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.0173 acc 0.2638  val loss 1.8769 acc 0.3206  78s  *best
+epoch   2/8  train loss 1.8084 acc 0.3286  val loss 1.6957 acc 0.3774  24s  *best
+epoch   3/8  train loss 1.6776 acc 0.3737  val loss 2.0548 acc 0.3286  24s
+epoch   4/8  train loss 1.5448 acc 0.4333  val loss 1.4943 acc 0.4490  25s  *best
+epoch   5/8  train loss 1.4055 acc 0.4882  val loss 1.4541 acc 0.4656  25s  *best
+epoch   6/8  train loss 1.3047 acc 0.5223  val loss 1.2693 acc 0.5434  25s  *best
+epoch   7/8  train loss 1.2229 acc 0.5556  val loss 1.2470 acc 0.5488  25s  *best
+epoch   8/8  train loss 1.1878 acc 0.5723  val loss 1.2369 acc 0.5504  25s  *best
+val acc 0.5504  (best epoch 8, 6.0 min, peak GPU 1.68 GB)

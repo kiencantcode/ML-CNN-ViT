@@ -1,0 +1,63 @@
+run: outputs\tuning\small_cnn_scratch_lrx0.3_wd0.005\frac0.1_augbasic_seed0
+model small_cnn | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/60  train loss 2.0702 acc 0.2614  val loss 1.7538 acc 0.3532  45s  *best
+epoch   2/60  train loss 1.6739 acc 0.3862  val loss 1.5490 acc 0.4246  2s  *best
+epoch   3/60  train loss 1.4968 acc 0.4554  val loss 1.4068 acc 0.4904  2s  *best
+epoch   4/60  train loss 1.3779 acc 0.4991  val loss 1.3490 acc 0.5012  2s  *best
+epoch   5/60  train loss 1.2744 acc 0.5469  val loss 1.5147 acc 0.4450  2s
+epoch   6/60  train loss 1.2199 acc 0.5643  val loss 1.1888 acc 0.5624  2s  *best
+epoch   7/60  train loss 1.1536 acc 0.5902  val loss 1.1794 acc 0.5714  2s  *best
+epoch   8/60  train loss 1.0982 acc 0.6087  val loss 1.2975 acc 0.5386  2s
+epoch   9/60  train loss 1.0503 acc 0.6199  val loss 1.2199 acc 0.5758  2s  *best
+epoch  10/60  train loss 1.0126 acc 0.6413  val loss 1.0663 acc 0.6160  2s  *best
+epoch  11/60  train loss 0.9863 acc 0.6464  val loss 1.1059 acc 0.6106  2s
+epoch  12/60  train loss 0.9574 acc 0.6498  val loss 1.2479 acc 0.5618  2s
+epoch  13/60  train loss 0.9033 acc 0.6754  val loss 1.1709 acc 0.5936  2s
+epoch  14/60  train loss 0.8858 acc 0.6844  val loss 1.0464 acc 0.6350  2s  *best
+epoch  15/60  train loss 0.8307 acc 0.7183  val loss 1.0430 acc 0.6354  2s  *best
+epoch  16/60  train loss 0.8024 acc 0.7181  val loss 0.9689 acc 0.6562  2s  *best
+epoch  17/60  train loss 0.7907 acc 0.7199  val loss 0.9792 acc 0.6576  2s  *best
+epoch  18/60  train loss 0.7670 acc 0.7319  val loss 1.0073 acc 0.6498  2s
+epoch  19/60  train loss 0.7270 acc 0.7404  val loss 1.1081 acc 0.6272  2s
+epoch  20/60  train loss 0.7071 acc 0.7551  val loss 0.9407 acc 0.6750  2s  *best
+epoch  21/60  train loss 0.6882 acc 0.7545  val loss 0.9709 acc 0.6738  2s
+epoch  22/60  train loss 0.6222 acc 0.7817  val loss 0.9986 acc 0.6586  2s
+epoch  23/60  train loss 0.6182 acc 0.7842  val loss 0.9288 acc 0.6716  2s
+epoch  24/60  train loss 0.6045 acc 0.7853  val loss 0.9970 acc 0.6730  2s
+epoch  25/60  train loss 0.5532 acc 0.8179  val loss 0.8418 acc 0.7100  2s  *best
+epoch  26/60  train loss 0.5379 acc 0.8163  val loss 0.9037 acc 0.6890  2s
+epoch  27/60  train loss 0.5199 acc 0.8246  val loss 0.8926 acc 0.7000  2s
+epoch  28/60  train loss 0.4978 acc 0.8321  val loss 0.8887 acc 0.6906  2s
+epoch  29/60  train loss 0.4792 acc 0.8411  val loss 0.9202 acc 0.6888  2s
+epoch  30/60  train loss 0.4716 acc 0.8388  val loss 1.0147 acc 0.6660  2s
+epoch  31/60  train loss 0.4215 acc 0.8594  val loss 0.9126 acc 0.7028  2s
+epoch  32/60  train loss 0.4052 acc 0.8725  val loss 0.9861 acc 0.6842  2s
+epoch  33/60  train loss 0.4147 acc 0.8583  val loss 0.8042 acc 0.7324  2s  *best
+epoch  34/60  train loss 0.3713 acc 0.8812  val loss 0.8102 acc 0.7322  2s
+epoch  35/60  train loss 0.3595 acc 0.8873  val loss 0.8023 acc 0.7336  2s  *best
+epoch  36/60  train loss 0.3396 acc 0.8873  val loss 0.8107 acc 0.7348  2s  *best
+epoch  37/60  train loss 0.3081 acc 0.9027  val loss 0.8364 acc 0.7232  2s
+epoch  38/60  train loss 0.3087 acc 0.8975  val loss 0.8323 acc 0.7206  2s
+epoch  39/60  train loss 0.2998 acc 0.9042  val loss 0.7730 acc 0.7446  2s  *best
+epoch  40/60  train loss 0.2872 acc 0.9056  val loss 0.7680 acc 0.7484  2s  *best
+epoch  41/60  train loss 0.2719 acc 0.9163  val loss 0.7799 acc 0.7426  2s
+epoch  42/60  train loss 0.2605 acc 0.9217  val loss 0.7708 acc 0.7498  2s  *best
+epoch  43/60  train loss 0.2580 acc 0.9250  val loss 0.7510 acc 0.7506  2s  *best
+epoch  44/60  train loss 0.2552 acc 0.9212  val loss 0.7736 acc 0.7444  2s
+epoch  45/60  train loss 0.2322 acc 0.9321  val loss 0.7859 acc 0.7418  2s
+epoch  46/60  train loss 0.2197 acc 0.9346  val loss 0.7563 acc 0.7482  2s
+epoch  47/60  train loss 0.2208 acc 0.9371  val loss 0.7622 acc 0.7512  2s  *best
+epoch  48/60  train loss 0.2057 acc 0.9435  val loss 0.7541 acc 0.7542  2s  *best
+epoch  49/60  train loss 0.2008 acc 0.9422  val loss 0.7629 acc 0.7534  2s
+epoch  50/60  train loss 0.1943 acc 0.9446  val loss 0.7515 acc 0.7568  2s  *best
+epoch  51/60  train loss 0.2028 acc 0.9422  val loss 0.7600 acc 0.7548  2s
+epoch  52/60  train loss 0.2002 acc 0.9433  val loss 0.7527 acc 0.7558  2s
+epoch  53/60  train loss 0.1861 acc 0.9504  val loss 0.7586 acc 0.7530  2s
+epoch  54/60  train loss 0.1869 acc 0.9487  val loss 0.7590 acc 0.7562  2s
+epoch  55/60  train loss 0.1881 acc 0.9500  val loss 0.7520 acc 0.7520  2s
+epoch  56/60  train loss 0.1790 acc 0.9504  val loss 0.7478 acc 0.7560  2s
+epoch  57/60  train loss 0.1769 acc 0.9522  val loss 0.7616 acc 0.7514  2s
+epoch  58/60  train loss 0.1705 acc 0.9536  val loss 0.7480 acc 0.7564  2s
+epoch  59/60  train loss 0.1697 acc 0.9540  val loss 0.7452 acc 0.7576  2s  *best
+epoch  60/60  train loss 0.1785 acc 0.9516  val loss 0.7521 acc 0.7518  2s
+val acc 0.7576  (best epoch 59, 3.7 min, peak GPU 0.08 GB)

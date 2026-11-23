@@ -98,6 +98,8 @@ def load_runs(outputs):
 def load_baseline(outputs):
     path = Path(outputs) / "baseline" / "metrics.json"
     if not path.exists():
+        path = Path("outputs/baseline/metrics.json")
+    if not path.exists():
         return None
     summary = json.loads(path.read_text())["summary"]
     return pd.DataFrame([

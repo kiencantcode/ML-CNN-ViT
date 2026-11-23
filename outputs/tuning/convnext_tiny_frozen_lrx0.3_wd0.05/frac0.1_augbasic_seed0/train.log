@@ -1,0 +1,11 @@
+run: outputs\tuning\convnext_tiny_frozen_lrx0.3_wd0.05\frac0.1_augbasic_seed0
+model convnext_tiny.fb_in1k | fraction 0.1 | aug basic | seed 0 | train 4500 / val 5000 / test 10000 | device cuda
+epoch   1/8  train loss 2.0481 acc 0.4371  val loss 1.5774 acc 0.8166  63s  *best
+epoch   2/8  train loss 1.2005 acc 0.8538  val loss 0.8689 acc 0.8958  12s  *best
+epoch   3/8  train loss 0.7714 acc 0.8804  val loss 0.6166 acc 0.9040  12s  *best
+epoch   4/8  train loss 0.6039 acc 0.8877  val loss 0.5124 acc 0.9082  12s  *best
+epoch   5/8  train loss 0.5266 acc 0.8967  val loss 0.4629 acc 0.9112  11s  *best
+epoch   6/8  train loss 0.4941 acc 0.8971  val loss 0.4394 acc 0.9128  11s  *best
+epoch   7/8  train loss 0.4713 acc 0.9011  val loss 0.4309 acc 0.9128  13s
+epoch   8/8  train loss 0.4737 acc 0.8973  val loss 0.4298 acc 0.9134  11s  *best
+val acc 0.9134  (best epoch 8, 4.6 min, peak GPU 0.39 GB)
