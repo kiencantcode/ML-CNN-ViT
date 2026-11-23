@@ -1,0 +1,18 @@
+[2026-11-23T14:06:32] experiments
+63 jobs: 0 finished, 63 to run
+[2026-11-23 14:06:35] start: 63 runs to do (0 already finished)
+[2026-11-23 14:06:35] (1/63) learning_curve: small_cnn_scratch/frac0.01_augbasic_seed0
+[2026-11-23 14:09:16]     done in 2.7 min: test acc 0.4927  macro-F1 0.4935  (best epoch 50, 2.0 min, peak GPU 0.08 GB)
+[2026-11-23 14:09:16] (2/63) learning_curve: resnet50_finetune/frac0.01_augbasic_seed0
+[2026-11-23 14:13:27]     done in 4.2 min: test acc 0.8218  macro-F1 0.8224  (best epoch 8, 3.1 min, peak GPU 1.68 GB)
+[2026-11-23 14:13:27] (3/63) learning_curve: convnext_tiny_finetune/frac0.01_augbasic_seed0
+[2026-11-23 14:18:00]     done in 4.5 min: test acc 0.9258  macro-F1 0.9258  (best epoch 8, 3.5 min, peak GPU 2.26 GB)
+[2026-11-23 14:18:00] (4/63) learning_curve: small_cnn_scratch/frac0.1_augbasic_seed0
+[2026-11-23 14:22:08]     done in 4.1 min: test acc 0.7757  macro-F1 0.7754  (best epoch 59, 3.6 min, peak GPU 0.08 GB)
+[2026-11-23 14:22:08] (5/63) learning_curve: resnet50_finetune/frac0.1_augbasic_seed0
+[2026-11-23 14:29:52]     done in 7.7 min: test acc 0.9385  macro-F1 0.9385  (best epoch 8, 6.3 min, peak GPU 1.69 GB)
+[2026-11-23 14:29:52] (6/63) learning_curve: convnext_tiny_finetune/frac0.1_augbasic_seed0
+[2026-11-23T15:13:51] experiments
+63 jobs: 5 finished, 58 to run
+[2026-11-23 15:13:54] start: 58 runs to do (5 already finished)
+[2026-11-23 15:13:55] (1/58) learning_curve: convnext_tiny_finetune/frac0.1_augbasic_seed0

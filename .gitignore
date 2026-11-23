@@ -17,6 +17,7 @@ outputs/*
 !outputs/baseline/
 !outputs/logs/
 !outputs/tuning/
+!outputs/tuned/
 !outputs/small_cnn_scratch/
 !outputs/resnet50_finetune/
 !outputs/resnet50_frozen/

@@ -8,7 +8,7 @@ ConvNeXt) and Vision Transformers with respect to dataset size, data augmentatio
 **This repository covers the CNN part.** ViT part: [teammate's name and repository link]
 
 Status: the runs with the default settings are finished (63 runs, 3 seeds each, plus Grad-CAM and
-CIFAR-10-C). The hyperparameter search is finished and the runs with the selected settings are in progress.
+CIFAR-10-C). The hyperparameter search is finished; the full grid was not rerun with the selected settings.
 
 ## What is compared
 
@@ -53,6 +53,19 @@ that (SmallCNN, ConvNeXt-Tiny, ResNet-50 random init) are within noise. For four
 rate is the largest one tried. All trials: [`results/tuning.md`](results/tuning.md).
 The test results of the default settings were already known before this search; the search space and the
 selection rule were fixed before running it.
+
+Because of limited GPU time, the results below use the default settings. Only 5 of the 63 runs were
+repeated with the selected settings (seed 0, test accuracy in %, files in `outputs/tuned/`):
+
+| Run | Default, seed 0 | Selected settings, seed 0 |
+|---|---|---|
+| ResNet-50, 1% | 73.40 | 82.18 |
+| ResNet-50, 10% | 92.74 | 93.85 |
+| ConvNeXt-Tiny, 1% | 92.59 | 92.58 |
+| SmallCNN, 1% | 50.12 | 49.27 |
+| SmallCNN, 10% | 77.92 | 77.57 |
+
+One seed is not enough for a conclusion, but the default settings probably understate ResNet-50 at 1%.
 
 ## Installation
 
@@ -174,7 +187,8 @@ The corrupted mean uses all 19 corruptions. With only the 15 standard ones it is
 
 - Pretraining matters most when data is scarce: with 450 images ConvNeXt-Tiny is 42.6 points above
   SmallCNN; with all data the gap is 6.3 points.
-- ConvNeXt-Tiny is the best CNN at every data size, and ResNet-50 needs more data to catch up.
+- ConvNeXt-Tiny is the best CNN at every data size, and ResNet-50 needs more data to catch up
+  (part of its gap at 1% comes from the default learning rate, see the hyperparameter search).
 - Augmentation helps the model trained from scratch (+8.0 points) much more than the pretrained models
   (+0.3 to +0.7).
 - Without pretraining, ResNet-50 is worse than the 1.15M-parameter SmallCNN at 10% data.

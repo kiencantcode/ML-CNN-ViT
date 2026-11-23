@@ -26,6 +26,8 @@ ABLATION_CONFIGS = [
     "configs/resnet50_random.yaml",
 ]
 ABLATION_FRACTIONS = [0.1, 1.0]
+MAX_ATTEMPTS = 3
+STALL_MINUTES = 15
 
 
 def learning_curve_jobs():
@@ -103,6 +105,28 @@ def log_line(log_file, text):
         f.write(line + "\n")
 
 
+def run_with_watchdog(command, run_log):
+    """Run one job; stop it if its log has not changed for STALL_MINUTES."""
+    with open(run_log, "w", encoding="utf-8") as out:
+        process = subprocess.Popen(command, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT)
+        while True:
+            try:
+                return process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                pass
+            # flushed writes update the size even when Windows delays the modified time
+            size = run_log.stat().st_size
+            if size != getattr(process, "last_size", None):
+                process.last_size, process.last_change = size, time.monotonic()
+            elif time.monotonic() - process.last_change > 60 * STALL_MINUTES:
+                if sys.platform == "win32":
+                    subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True)
+                else:
+                    process.kill()
+                process.wait()
+                return "stalled"
+
+
 def main():
     args = parse_args()
     jobs = []
@@ -137,6 +161,7 @@ def main():
         overrides = dict(overrides)
         overrides["train.keep_checkpoint"] = keep_checkpoint(overrides)
         overrides["progress_bar"] = False
+        overrides["data.eval_num_workers"] = 0
         run_dir = run_dir_for(config, overrides)
         label = f"{Path(config).stem}/{run_dir.name}"
         log_line(log_file, f"({i}/{len(todo)}) {study}: {label}")
@@ -147,18 +172,22 @@ def main():
                    "--config", config, "--skip-existing", "--set"]
         command += [f"{k}={v}" for k, v in overrides.items()]
         start = time.perf_counter()
-        with open(run_log, "w", encoding="utf-8") as out:
-            result = subprocess.run(command, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT)
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            code = run_with_watchdog(command, run_log)
+            if code == 0 and (run_dir / "metrics.json").exists():
+                break
+            log_line(log_file, f"    attempt {attempt} failed (exit {code})")
+            time.sleep(30)
         minutes = (time.perf_counter() - start) / 60
 
         last = [line for line in run_log.read_text(encoding="utf-8", errors="replace").splitlines()
                 if line.strip()]
         summary = last[-1] if last else ""
-        if result.returncode == 0 and (run_dir / "metrics.json").exists():
+        if code == 0 and (run_dir / "metrics.json").exists():
             log_line(log_file, f"    done in {minutes:.1f} min: {summary}")
         else:
             failures.append(label)
-            log_line(log_file, f"    FAILED (exit {result.returncode}) after {minutes:.1f} min: {summary}")
+            log_line(log_file, f"    FAILED (exit {code}) after {minutes:.1f} min: {summary}")
 
     log_line(log_file, f"finished: {len(todo) - len(failures)} ok, {len(failures)} failed")
     for label in failures:
